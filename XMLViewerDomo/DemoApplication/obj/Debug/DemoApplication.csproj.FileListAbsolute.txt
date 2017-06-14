@@ -1,0 +1,14 @@
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\bin\Debug\DemoApplication.exe
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\bin\Debug\DemoApplication.pdb
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\bin\Debug\XMLViewer.dll
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\bin\Debug\XMLViewer.pdb
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication.csprojResolveAssemblyReference.cache
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\XMLViewerDemoApplication.baml
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\XMLViewerDemoApplication.g.cs
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\App.g.cs
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication_MarkupCompile.cache
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication.g.resources
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication.Properties.Resources.resources
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication.csproj.GenerateResource.Cache
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication.exe
+C:\Users\karta\Desktop\XMLViewerDomo\XMLViewerDomo\DemoApplication\obj\Debug\DemoApplication.pdb
