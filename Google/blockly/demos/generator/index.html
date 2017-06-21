@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Blockly Demo: Generating SparkS</title>
+    <script src="lib/codemirror.js"></script>
+    <script src="addon/hint/show-hint.js"></script>
+    <script src="addon/hint/css-hint.js"></script>
+    <script src="indent.js"></script>
+    <link rel="stylesheet" href="addon/dialog/dialog.css">
+    <link rel="stylesheet" href="addon/search/matchesonscrollbar.css">
+    <script src="mode/xml/xml.js"></script>
+    <script src="addon/dialog/dialog.js"></script>
+    <script src="addon/search/searchcursor.js"></script>
+    <script src="addon/search/search.js"></script>
+    <link rel="stylesheet" href="addon/hint/show-hint.css">
+
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <script src="mode/sparks/sparks.js"></script>
+    <script src="../../blockly_compressed.js"></script>
+    <script src="../../blocks_compressed.js"></script>
+    <script src="../../sparks_compressed.js"></script>
+    <!--script src="../../javascript_compressed.js"></script-->
+    <script src="../../msg/js/en.js"></script>
+    <script src="/diagnostic/lib/panel-view.js"></script>
+    <script src="/diagnostic/grunt-file.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="rudimentary/show-hint.css">
+    <link rel="stylesheet" href="rudimentary/foldgutter.css">
+    <script src="macro-expansion/macro-expansion/bin/preprocessor"></script>
+    <script src="macro-expansion/macro-expansion/Preprocessor.js"></script>
+    <script src="macro-expansion/macro-expansion/package.json"></script>
+    <script src="rudimentary/matchbrackets.js"></script>
+    <script src="rudimentary/closebrackets.js"></script>
+    <script src="rudimentary/foldcode.js"></script>
+    <script src="rudimentary/indent-fold.js"></script>
+    <script src="rudimentary/brace-fold.js"></script>
+    <script src="rudimentary/comment-fold.js"></script>
+    <script src="rudimentary/foldgutter.js"></script>
+    <!--script src="rudimentary/sparks-hint.js"></script-->
+    <script src="rudimentary/anyword-hint.js"></script>
+    <script src="rudimentary/show-hint.js"></script>
+    <script src="rudimentary/match-highlighter.js"></script>
+    <script src="rudimentary/annotatescrollbar.js"></script>
+    <script src="rudimentary/matchesoncrollbar.js"></script>
+    <script src="rudimentary/lint/lint.js"></script>
+    <script src="selection/mark-selection.js"></script>
+    <script src="selection/active-line.js"></script>
+    <script src="selection/selection-pointer.js"></script>
+    <script src="display/fullscreen.js"></script>
+    <script src="mode/sparks/sparks.js"></script>
+    <script src="addon/hint/show-hint.js"></script>
+    <script src="addon/hint/css-hint.js"></script>
+    <link rel="stylesheet" href="addon/dialog/dialog.css">
+    <link rel="stylesheet" href="rudimentary/matchesonscrollbar.css">
+    <link rel="stylesheet" href="display/fullscreen.css">
+    <link rel="stylesheet" href="rudimentary/lint/lint.css">
+    <script src="mode/xml/xml.js"></script>
+    <script src="addon/dialog/dialog.js"></script>
+    <script src="rudimentary/searchcursor.js"></script>
+    <script src="addon/search/search.js"></script>
+    <link rel="stylesheet" href="addon/hint/show-hint.css">
+    <link rel="stylesheet" href="../theme/3024-day.css">
+    <!-- temalar -->
+    <link rel="stylesheet" href="theme/3024-night.css">
+    <link rel="stylesheet" href="theme/abcdef.css">
+    <link rel="stylesheet" href="theme/ambiance.css">
+    <link rel="stylesheet" href="theme/base16-dark.css">
+    <link rel="stylesheet" href="theme/bespin.css">
+    <link rel="stylesheet" href="theme/base16-light.css">
+    <link rel="stylesheet" href="theme/blackboard.css">
+    <link rel="stylesheet" href="theme/cobalt.css">
+    <link rel="stylesheet" href="theme/colorforth.css">
+    <link rel="stylesheet" href="theme/dracula.css">
+    <link rel="stylesheet" href="theme/duotone-dark.css">
+    <link rel="stylesheet" href="theme/duotone-light.css">
+    <link rel="stylesheet" href="theme/eclipse.css">
+    <link rel="stylesheet" href="theme/elegant.css">
+    <link rel="stylesheet" href="theme/erlang-dark.css">
+    <link rel="stylesheet" href="theme/hopscotch.css">
+    <link rel="stylesheet" href="theme/icecoder.css">
+    <link rel="stylesheet" href="theme/isotope.css">
+    <link rel="stylesheet" href="theme/lesser-dark.css">
+    <link rel="stylesheet" href="theme/liquibyte.css">
+    <link rel="stylesheet" href="theme/material.css">
+    <link rel="stylesheet" href="theme/mbo.css">
+    <link rel="stylesheet" href="theme/mdn-like.css">
+    <link rel="stylesheet" href="theme/midnight.css">
+    <link rel="stylesheet" href="theme/monokai.css">
+    <link rel="stylesheet" href="theme/neat.css">
+    <link rel="stylesheet" href="theme/neo.css">
+    <link rel="stylesheet" href="theme/night.css">
+    <link rel="stylesheet" href="theme/panda-syntax.css">
+    <link rel="stylesheet" href="theme/paraiso-dark.css">
+    <link rel="stylesheet" href="theme/paraiso-light.css">
+    <link rel="stylesheet" href="theme/pastel-on-dark.css">
+    <link rel="stylesheet" href="theme/railscasts.css">
+    <link rel="stylesheet" href="theme/rubyblue.css">
+    <link rel="stylesheet" href="theme/seti.css">
+    <link rel="stylesheet" href="theme/solarized.css">
+    <link rel="stylesheet" href="theme/the-matrix.css">
+    <link rel="stylesheet" href="theme/tomorrow-night-bright.css">
+    <link rel="stylesheet" href="theme/tomorrow-night-eighties.css">
+    <link rel="stylesheet" href="theme/ttcn.css">
+    <link rel="stylesheet" href="theme/twilight.css">
+    <link rel="stylesheet" href="theme/vibrant-ink.css">
+    <link rel="stylesheet" href="theme/xq-dark.css">
+    <link rel="stylesheet" href="theme/xq-light.css">
+    <link rel="stylesheet" href="theme/yeti.css">
+    <link rel="stylesheet" href="theme/zenburn.css">
+
+    <style>
+        body {
+            background: -moz-linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%);
+            /* FF3.6-15 */
+            background: -webkit-linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%);
+            /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%);
+            font-family: sans-serif;
+        }
+        
+        p {
+            float: right;
+            color: darkslategray;
+        }
+        
+        .head {
+            color: rgb(3, 173, 235);
+            font-size: 150%;
+            top: 0%;
+            width: 100%;
+            font-style: italic;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background: -moz-linear-gradient(45deg, #f7f7f7 0%, rgb(3, 173, 235) 100%);
+            /* FF3.6-15 */
+            background: -webkit-linear-gradient(45deg, #f7f7f7 0%, rgb(3, 173, 235) 100%);
+            /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(45deg, #f7f7f7 0%, rgb(3, 173, 235) 100%);
+        }
+        
+        #blocklyDiv {
+            top: 0%;
+            float: left;
+            width: 52%;
+            height: 500px;
+            border-radius: 5px;
+        }
+        
+        .CodeMirror {
+            bottom: 0%;
+            float: right;
+            width: 46%;
+            height: 500px;
+            border-radius: 5px;
+        }
+        
+        .change {
+            top: 0%;
+            float: left;
+            width: 3%;
+            height: 500px;
+            background: red;
+            border-radius: 5px;
+        }
+        
+        #options {
+            color: red;
+            font-style: normal;
+            float: right;
+            font-size: 150%;
+        }
+        
+        #deneme {
+            font-size: 100%;
+            font-weight: bold;
+            color: #ffffff;
+            top: 0%;
+            float: left;
+            width: 2%;
+            height: 500px;
+            background: -moz-linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%);
+            background: -webkit-linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%);
+            background: linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%);
+        }
+        
+        #showcode {
+            padding-right: 45%;
+            float: left;
+        }
+        
+        #showcode2 {
+            padding-right: 40%;
+            float: right;
+            visibility: hidden;
+        }
+        
+        iframe {
+            width: 49%;
+            float: left;
+            height: 300px;
+            border: 1px solid black;
+            border-left: 0px;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #dddddd;
+        }
+        
+        li {
+            float: left;
+        }
+        
+        li a {
+            display: block;
+            padding: 8px;
+        }
+        
+        #menu {
+            float: right;
+            color: #f7f7f7;
+            font-size: 20px;
+            height: 59px;
+            background-color: rgb(3, 173, 235);
+            border: none;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+        }
+        
+        #about {
+            float: right;
+        }
+        
+        div.scrollmenu {
+            background-color: rgb(3, 203, 255);
+            overflow: auto;
+        }
+        
+        div.scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+        
+        div.scrollmenu a:hover {
+            background-color: darkslategray;
+        }
+        
+        #inputFileNameToSaveAs {
+            display: none;
+        }
+        
+        #load {
+            color: darkslategray;
+        }
+        
+        #modal_wrapper.overlay:before {
+            content: " ";
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            background: #000;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        #modal_window {
+            display: none;
+            z-index: 200;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 360px;
+            overflow: auto;
+            padding: 10px 20px;
+            background: #fff;
+            border: 5px solid #999;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        #modal_wrapper.overlay #modal_window {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="head">
+        <h1> Visual SparkS
+            <button id="menu" onclick="showMenu()">Menu</button>
+        </h1>
+
+        <!--<div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>-->
+
+    </div>
+    <div id="scrmnu" class="scrollmenu">
+
+        <a href="#home" id="1" onclick="load()">Load        </a>
+        <input id="load" type="file" name="LastName" onchange="loadfile(this)" id="Load">
+
+        <a href="#news" id="2" onclick="saveTextAsFile()">Save</a>
+
+        <a href="#news" id="3" onclick="openFind()">Find</a>
+        <a href="#news" id="4" onclick="find()">Find</a>
+        <a href="#news" id="5" onclick="findPrev()">Prev</a>
+        <a href="#news" id="6" onclick="findNext()">Next</a>
+        <a href="#find" id="7" onclick="replace()">Replace</a>
+        <a href="#find" id="8" onclick="replaceAll()">Replace All</a>
+        <a href="#contact" id="9" onclick="changecodemirror()">Toggle</a>
+        <a href="#about" id="10" onclick="macro()">Macro</a>
+        <a href="#about" id="11" onclick="openTheme()">Themes</a>
+        <p id="sel">Select a theme: <select onchange="selectTheme()" id="select">      
+    <option selected>default</option>
+    
+    <option>base16-dark</option>
+
+    
+    <option>eclipse</option>
+    
+    <option>monokai</option>
+    
+    </select>
+            <a href="#news" id="about">About</a>
+    </div>
+    <td><input id="inputFileNameToSaveAs"></input>
+    </td>
+
+    <div>
+
+        <div id="code">
+        </div>
+
+        <div id="blocklyDiv"></div>
+        <button id="deneme" class="change" onclick="showCode()"><
+        >
+    </button>
+    </div>
+    <div>
+        <p> Powered by Blockly and CodeMirror</p>
+    </div>
+    <xml id="toolbox" style="display: none">
+        <category name="Include" colour="#a55b5b">
+            <block type="include_library">
+                <field name="NAME">Dialog</field>
+            </block>
+        </category>
+        <category name="Require" colour="#a55b5b">
+            <block type="require_as_linkertype">
+                <field name="name1">var_req</field>
+                <field name="name2"></field>
+                <field name="name3"></field>
+                <field name="name4"></field>
+            </block>
+        </category>
+        <category name="Bind" colour="#a55b5b">
+            <block type="bind">
+                <field name="name1">TestType</field>
+                <field name="name2"></field>
+            </block>
+        </category>
+        <category name="Order" colour="#a55b5b">
+            <block type="order">
+                <field name="name1">var_or</field>
+                <field name="NAME">descending</field>
+                <field name="ID">var_par</field>
+            </block>
+        </category>
+        <category name="Filter" colour="#a55b5b">
+            <block type="filter">
+                <field name="name1">var_fil</field>
+            </block>
+            <block type="filter_single">
+                <field name="symbols">Frequency</field>
+                <field name="name">
+                    <</field>
+                        <field name="namee"> </field>
+            </block>
+            <block type="filter_double">
+                <field name="symbols">Frequency</field>
+                <field name="namee"> </field>
+                <field name="namee2"> </field>
+            </block>
+        </category>
+        <category name="Test Point" colour="#a55b5b">
+            <block type="testpoint">
+                <field name="name1">var_tp</field>
+                <value name="3">
+                    <block type="measure_parameter">
+                        <field name="name1">ID1</field>
+                        <field name="name2"> </field>
+                    </block>
+                </value>
+            </block>
+            <block type="provide_parameter">
+                <field name="name1">var_par</field>
+            </block>
+            <block type="provide_parameter2">
+                <field name="name1">Frequency</field>
+            </block>
+            <block type="optional"></block>
+            <block type="optional_sentence_enum">
+                <field name="name1"></field>
+            </block>
+            <block type="optional_sentence_enum_param">
+                <field name="name1"></field>
+            </block>
+            <block type="optional_sentence_default">
+                <field name="name"></field>
+            </block>
+            <block type="measure_parameter">
+                <field name="name1">ID1</field>
+                <field name="name2"> </field>
+            </block>
+        </category>
+        <category name="Test Point Like" colour="#a55b5b">
+            <block type="testpointlike">
+                <field name="name1">var_tpl</field>
+                <field name="name2">var_tp</field>
+            </block>
+        </category>
+        <category name="Test Group" colour="#a55b5b">
+            <block type="testgroup">
+                <field name="name1">var_tg</field>
+                <field name="name2">var_tp</field>
+            </block>
+        </category>
+        <!--
+        <category name="Header" colour="#a55b5b">
+            <block type="include_library">
+                <field name="NAME">Dialog</field>
+            </block>
+            <block type="require_as_linkertype">
+                <field name="name1">var_req</field>
+                <field name="name2"></field>
+                <field name="name3"></field>
+                <field name="name4"></field>
+            </block>
+            <block type="bind">
+                <field name="name1">TestType</field>
+                <field name="name2"></field>
+            </block>
+            <block type="order">
+                <field name="name1">var_or</field>
+                <field name="NAME">descending</field>
+                <field name="ID">var_par</field>
+            </block>
+            <block type="filter">
+                <field name="name1">var_fil</field>
+            </block>
+            <block type="controls_filter_items"></block>
+            <block type="testpoint">
+                <field name="name1">var_tp</field>
+            </block>
+            <block type="provide_parameter">
+                <field name="name1">var_par</field>
+            </block>
+            <block type="provide_parameter2">
+                <field name="name1">Frequency</field>
+            </block>
+            <block type="optional"></block>
+            <block type="optional_sentence_enum">
+                <field name="name1"></field>
+            </block>
+            <block type="optional_sentence_enum_param">
+                <field name="name1"></field>
+            </block>
+            <block type="optional_sentence_default">
+                <field name="name"></field>
+            </block>
+            <!--<block type="filteritembrac">
+                <field name="name1">id1</field>
+                <field name="name2"></field>
+                <field name="name3"></field>
+            </block>-->
+        <!-- bu kısım yorumda olmamalı
+            <block type="testpointlike">
+                <field name="name1">var_tpl</field>
+                <field name="name2">var_tp</field>
+            </block>
+            <block type="testgroup">
+                <field name="name1">var_tg</field>
+                <field name="name2">var_tp</field>
+            </block>
+        </category>
+        -->
+        <sep></sep>
+        <sep></sep>
+        <category name="Shutdown" colour="#5ba5a5">
+            <block type="shutdown"></block>
+        </category>
+        <category name="Function Call" colour="#5ba5a5">
+            <block type="func_call">
+                <field name="Dialog">item</field>
+                <field name="name2">item</field>
+            </block>
+            <block type="func_call_paran"></block>
+            <block type="func_call_paran_arg">
+                <field name="name1"></field>
+            </block>
+            <block type="func_call_paran_arg2">
+                <field name="name1"></field>
+            </block>
+        </category>
+        <category name="Constant Decleration" colour="#5ba5a5">
+            <block type="constant">
+                <field name="NAME">var_cons</field>
+            </block>
+            <block type="number">
+                <field name="number">0</field>
+            </block>
+            <block type="enumber">
+                <field name="name1">e</field>
+                <field name="name2">+</field>
+                <field name="number">0</field>
+            </block>
+        </category>
+        <category name="Try" colour="#5ba5a5">
+            <block type="controls_try"></block>
+            <block type="tryexception">
+                <field name="symbols">UserInputError</field>
+            </block>
+        </category>
+        <category name="Define" colour="#5ba5a5">
+            <block type="define">
+                <field name="name">var_def</field>
+            </block>
+            <block type="fill">
+                <field name="var_req">item</field>
+                <field name="var_tp">item</field>
+            </block>
+        </category>
+        <category name="Expand" colour="#5ba5a5">
+            <block type="expand">
+                <field name="name1">var_def</field>
+            </block>
+            <block type="expand_replace">
+                <field name="var_req">item</field>
+                <field name="var_tp">item</field>
+            </block>
+            <block type="expand_replace_with">
+                <field name="var_req">item</field>
+                <field name="var_tp">item</field>
+            </block>
+        </category>
+        <category name="If Else" colour="#5ba5a5">
+            <block type="controls_if_2"></block>
+            <block type="compare">
+                <field name="symbols">greater</field>
+            </block>
+            <block type="arithExpr">
+                <field name="symbols">mult</field>
+            </block>
+            <block type="arithExprSub">
+            </block>
+            <block type="not"></block>
+            <block type="provide_parameter3">
+                <field name="name1">var_par3</field>
+            </block>
+            <block type="bool_expr_main">
+                <field name="1">xor</field>
+            </block>
+            <block type="eq_neq">
+                <field name="1">=</field>
+            </block>
+            <block type="eq_neq2">
+                <field name="1">=</field>
+            </block>
+            <block type="bool_expr_sub">
+            </block>
+            <block type="true_false">
+                <field name="symbols">true</field>
+            </block>
+        </category>
+        <category name="For each" colour="#5ba5a5">
+            <block type="for_each">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range">
+                        <field name="name1">item</field>
+                        <value name="1">
+                            <block type="for_each_range_filter">
+                                <field name="name1">item</field>
+                            </block>
+                        </value>
+                        <value name="2">
+                            <block type="for_each_range_order">
+                                <field name="name1">item</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+            </block>
+            <!--
+            <block type="for_each_range">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range_fiter">
+                        <field name="name1">item</field>
+                    </block>
+                </value>
+                <value name="2">
+                    <block type="for_each_range_order">
+                        <field name="name1">item</field>
+                    </block>
+                </value>
+            </block>
+            -->
+            <block type="for_each">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range_brac_id">
+                        <field name="name1">ID1</field>
+                        <field name="name2">ID1</field>
+                    </block>
+                </value>
+            </block>
+            <block type="for_each">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range_brac_int">
+                        <value name="1">
+                            <block type="number">
+                                <field name="number">0</field>
+                            </block>
+                        </value>
+                        <value name="2">
+                            <block type="number">
+                                <field name="number">0</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+            </block>
+            <block type="enumber">
+                <field name="name1">e</field>
+                <field name="name2">+</field>
+                <field name="number">0</field>
+            </block>
+            <!--
+            <block type="for_each_range_fiter">
+                <field name="name1">item</field>
+            </block>
+            <block type="for_each_range_order">
+                <field name="name1">item</field>
+            </block>
+            <block type="for_each_range_brac_id">
+                <field name="name1">int</field>
+                <field name="name2">int</field>
+            </block>
+            -->
+        </category>
+        <category name="Set" colour="#5ba5a5">
+            <!--<block type="control_set">
+                <field name="PROPERTY">//variable</field>
+            </block>-->
+            <block type="set1">
+                <field name="name1">ID1</field>
+            </block>
+            <block type="set2">
+                <field name="name1">ID1</field>
+                <field name="name2">ID1</field>
+            </block>
+            <block type="string">
+                <field name="string"></field>
+            </block>
+        </category>
+        <category name="Sleep" colour="#5ba5a5">
+            <block type="sleep_for">
+                <field name="name1">item</field>
+            </block>
+            <block type="number">
+                <field name="number">0</field>
+            </block>
+            <block type="enumber">
+                <field name="name1">e</field>
+                <field name="name2">+</field>
+                <field name="number">0</field>
+            </block>
+        </category>
+        <category name="Number and String" colour="#5ba5a5">
+            <block type="number">
+                <field name="number">0</field>
+            </block>
+            <block type="enumber">
+                <field name="name1">e</field>
+                <field name="name2">+</field>
+                <field name="number">0</field>
+            </block>
+            <block type="string">
+                <field name="string"></field>
+            </block>
+        </category>
+        <category name="Comment" colour="#5ba5a5">
+            <block type="line_comment"></block>
+            <!--<block type="comment_finish"></block>-->
+            <block type="lines_comment"></block>
+            <block type="lines_collapse"></block>
+        </category>
+        <!--
+        <category name="Body" colour="#5ba5a5">
+            <block type="shutdown"></block>
+            <block type="func_call">
+                <field name="Dialog">item</field>
+                <field name="name2">item</field>
+            </block>
+            <block type="func_call_paran"></block>
+            <block type="func_call_paran_arg">
+                <field name="name1"></field>
+            </block>
+            <block type="func_call_paran_arg2">
+                <field name="name1"></field>
+            </block>
+            <block type="constant">
+                <field name="NAME">var_cons</field>
+            </block>
+            <block type="controls_try"></block>
+            <block type="define">
+                <field name="name">var_def</field>
+            </block>
+            <block type="fill">
+                <field name="var_req">item</field>
+                <field name="var_tp">item</field>
+            </block>
+            <block type="expand">
+                <field name="name1">var_def</field>
+            </block>
+            <block type="expand_replace">
+                <field name="var_req">item</field>
+                <field name="var_tp">item</field>
+            </block>
+            <block type="expand_replace_with">
+                <field name="var_req">item</field>
+                <field name="var_tp">item</field>
+            </block>
+            <block type="controls_if_2"></block>
+            <block type="compare">
+                <field name="symbols">greater</field>
+            </block>
+            <block type="not"></block>
+            <block type="provide_parameter3">
+                <field name="name1">var_par3</field>
+            </block>
+            <block type="bool_expr_main">
+                <field name="1">xor</field>
+            </block>
+            <block type="bool_expr_sub">
+            </block>
+            <block type="true_false">
+                <field name="symbols">true</field>
+            </block>
+            <block type="for_each">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range">
+                        <field name="name1">item</field>
+                        <value name="1">
+                            <block type="for_each_range_fiter">
+                                <field name="name1">item</field>
+                            </block>
+                        </value>
+                        <value name="2">
+                            <block type="for_each_range_order">
+                                <field name="name1">item</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+            </block>
+            <!--
+            <block type="for_each_range">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range_fiter">
+                        <field name="name1">item</field>
+                    </block>
+                </value>
+                <value name="2">
+                    <block type="for_each_range_order">
+                        <field name="name1">item</field>
+                    </block>
+                </value>
+            </block>
+            -->
+        <!-- bu kısım yorumda olmamalı
+            <block type="for_each">
+                <field name="name1">item</field>
+                <value name="1">
+                    <block type="for_each_range_brac_id">
+                        <field name="name1">int</field>
+                        <field name="name2">int</field>
+                    </block>
+                </value>
+            </block>
+            -->
+        <!--
+            <block type="for_each_range_fiter">
+                <field name="name1">item</field>
+            </block>
+            <block type="for_each_range_order">
+                <field name="name1">item</field>
+            </block>
+            <block type="for_each_range_brac_id">
+                <field name="name1">int</field>
+                <field name="name2">int</field>
+            </block>
+            -->
+        <!-- bu kısım yorumda olmamalı
+            <block type="control_set">
+                <field name="PROPERTY">//variable</field>
+            </block>
+            <block type="sleep_for">
+                <field name="name1">item</field>
+            </block>
+            <block type="number">
+                <field name="number">0</field>
+            </block>
+            <block type="string">
+                <field name="string"></field>
+            </block>
+            <block type="comment_start"></block>
+            <block type="comment_finish"></block>
+            <block type="line_comment"></block>
+        </category>
+        -->
+        <sep></sep>
+        <sep></sep>
+        <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+    </xml>
+
+
+
+    <script>
+        var th = 0;
+        var x = 0;
+        var m = 1;
+        var f1 = 0;
+        var l = 0;
+        var workspace = Blockly.inject('blocklyDiv', {
+            media: '../../media/',
+            toolbox: document.getElementById('toolbox')
+        });
+        //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+        //  workspace);
+        var editor = CodeMirror(document.getElementById("code"), {
+            mode: "sparks",
+            tabSize: 5,
+            lineNumbers: true,
+            firstLineNumber: 1,
+            smartIndent: true,
+            indentUnit: 5,
+            styleActiveLine: true,
+            styleSelectedText: true,
+            selectionPointer: true,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            highlightSelectionMatches: true,
+            showMatchesOnScrollbar: true,
+            annotateScrollbar: true,
+            //lint: CodeMirror.lint.sparks,
+            foldGutter: {
+                rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.indent, CodeMirror.fold.comment, CodeMirror.fold.brace)
+            },
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            //value: ee,
+
+            extraKeys: {
+                "Ctrl-Q": function(cm) {
+                    cm.foldCode(cm.getCursor());
+                },
+                "Ctrl-Space": "autocomplete",
+                "F11": function(cm) {
+                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                },
+                "Esc": function(cm) {
+                    if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                }
+            }
+        });
+        // Automatic keyword closing
+        function insertTextAtCursor(editor, text) {
+            var doc = editor.getDoc();
+            var cursor = doc.getCursor();
+            doc.replaceRange(text, cursor);
+        }
+
+        editor.on("keyup", function() {
+            var A1 = editor.getCursor().line;
+            var A2 = editor.getCursor().ch;
+
+            var B1 = editor.findWordAt({
+                line: A1,
+                ch: A2
+            }).anchor.ch;
+            var B2 = editor.findWordAt({
+                line: A1,
+                ch: A2
+            }).head.ch;
+            var popupKeyCodes = {
+                8: "Backspace",
+                16: "Shift",
+                17: "Ctrl",
+                35: "End",
+                37: "Left",
+                38: "Up",
+                39: "Right",
+                40: "Down",
+                46: "Delete",
+                127: "Delete",
+                63232: "Up",
+                63233: "Down",
+                63234: "Left",
+                63275: "End",
+                63235: "Right"
+            }
+
+            if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "if" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend if\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "define" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend define\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "fill" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend fill\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "testProcess" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend testProcess\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "order" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend order\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "filter" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend filter\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "testPoint" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend testPoint\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "try" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend try\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "for" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend for\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            } else if (editor.getRange({
+                    line: A1,
+                    ch: B1
+                }, {
+                    line: A1,
+                    ch: B2
+                }) == "do" && !popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                insertTextAtCursor(editor, "\n\nend do\n");
+                editor.setCursor(editor.getCursor().line - 2, 0);
+            }
+        });
+
+        // Suggestion
+        editor.on("keyup", function(cm, event) {
+            var popupKeyCodes = {
+                3: "Enter",
+                8: "Backspace",
+                9: "Tab",
+                13: "Enter",
+                16: "Shift",
+                17: "Ctrl",
+                18: "Alt",
+                19: "Pause",
+                20: "CapsLock",
+                27: "Esc",
+                32: "Space",
+                33: "PageUp",
+                34: "PageDown",
+                35: "End",
+                36: "Home",
+                37: "Left",
+                38: "Up",
+                39: "Right",
+                40: "Down",
+                44: "PrintScrn",
+                45: "Insert",
+                46: "Delete",
+                50: "'",
+                55: "{",
+                56: "(",
+                59: ";",
+                61: "=",
+                91: "Mod",
+                92: "Mod",
+                93: "Mod",
+                106: "*",
+                107: "=",
+                109: "-",
+                110: ".",
+                111: "/",
+                127: "Delete",
+                173: "-",
+                186: ";",
+                187: "=",
+                188: ",",
+                189: "-",
+                190: ".",
+                191: "/",
+                192: "`",
+                219: "[",
+                220: "\\",
+                221: "]",
+                222: "'",
+                225: "[",
+                63232: "Up",
+                63233: "Down",
+                63234: "Left",
+                63235: "Right",
+                63272: "Delete",
+                63273: "Home",
+                63275: "End",
+                63276: "PageUp",
+                63277: "PageDown",
+                63302: "Insert"
+            }
+            if (!popupKeyCodes[(event.keyCode || event.which).toString()]) {
+                CodeMirror.showHint(cm);
+            }
+        });
+
+
+
+
+        //replaceAll
+        function replaceAll(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
+        function getPos() {
+            var sel = document.getSelection(),
+                nd = sel.anchorNode,
+                text = nd.textContent.slice(0, sel.focusOffset);
+
+            var line = text.split("\n").length;
+            var col = text.split("\n").pop().length;
+            alert("row:" + line + ", col:" + col)
+        }
+
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+        document.getElementById("scrmnu").style.cssText = "display:none;";
+
+        function showMenu() {
+            if (m == 0) {
+                document.getElementById("scrmnu").style.cssText = "display:none;";
+                m = 1;
+            } else {
+                document.getElementById("scrmnu").style.cssText = "";
+                m = 0;
+            }
+        }
+
+        function changecodemirror() {
+            if (x == 0) {
+                document.getElementById("blocklyDiv").style.cssText = "display:none;";
+                //document.getElementById("deneme").style.cssText = " display:none;";
+                //document.getClassByName("CodeMirror cm-s-default").style.cssText = " visibility:hidden;";
+                document.getElementById("deneme").style.cssText = " display:none;";
+
+                document.getElementById("code").style.cssText = "top: 0 % ;float:right;left:155%; width:217% ; height: 500 px;";
+                x = 1;
+                //document.getElementById("deneme").innerText = ">  >   >   >   >";
+                //visibility: hidden;
+            } else {
+
+                document.getElementById("blocklyDiv").style.cssText = "top: 0%; float: left;width: 52%;height: 500px;";
+                document.getElementById("deneme").style.cssText = " top: 0%; float: left;     width: 2%;      height: 500px;    background: -moz-linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%); background: -webkit-linear-gradient(45deg, rgb(3, 173, 235) 0%, #f7f7f7 100%); background: linear-gradient(45deg,  #f7f7f7 0%,rgb(3, 173, 235) 100%);";
+                //document.getClassByName("CodeMirror cm-s-default").style.cssText = " visibility:hidden;";
+
+                document.getElementById("code").style.cssText = "";
+                x = 0;
+                document.getElementById("deneme").innerText = "< >";
+                //visibility: hidden;
+            }
+
+        }
+        document.getElementById("4").style.cssText = "display:none";
+        document.getElementById("5").style.cssText = "display:none";
+        document.getElementById("6").style.cssText = "display:none";
+        document.getElementById("7").style.cssText = "display:none";
+        document.getElementById("8").style.cssText = "display:none";
+
+        function openFind() {
+            if (f1 == 0) {
+                document.getElementById("1").style.cssText = "display:none";
+                document.getElementById("2").style.cssText = "display:none";
+                document.getElementById("3").innerText = "<<";
+                document.getElementById("4").style.cssText = "";
+                document.getElementById("5").style.cssText = "";
+                document.getElementById("6").style.cssText = "";
+                document.getElementById("7").style.cssText = "";
+                document.getElementById("8").style.cssText = "";
+                document.getElementById("9").style.cssText = "display:none";
+                document.getElementById("10").style.cssText = "display:none";
+                document.getElementById("11").style.cssText = "display:none";
+                document.getElementById("about").style.cssText = "display:none";
+
+                f1 = 1;
+            } else {
+                document.getElementById("1").style.cssText = "";
+                document.getElementById("2").style.cssText = "";
+                document.getElementById("3").innerText = "Find";
+                document.getElementById("4").style.cssText = "display:none";
+                document.getElementById("5").style.cssText = "display:none";
+                document.getElementById("6").style.cssText = "display:none";
+                document.getElementById("7").style.cssText = "display:none";
+                document.getElementById("8").style.cssText = "display:none";
+                document.getElementById("9").style.cssText = "";
+                document.getElementById("10").style.cssText = "";
+                document.getElementById("11").style.cssText = "";
+                document.getElementById("about").style.cssText = "";
+
+                f1 = 0;
+            }
+
+
+        };
+
+        function find() {
+            editor.execCommand("find");
+        };
+
+
+
+        function findPrev() {
+            editor.execCommand("findPrev");
+        };
+
+        function findNext() {
+            editor.execCommand("findNext");
+        };
+
+        function replace() {
+            editor.execCommand("replace");
+        };
+
+        function replaceAll() {
+            editor.execCommand("replaceAll");
+        };
+
+        function replaceAll(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
+        function macro() {
+
+            var x = editor.getValue();
+            var a = x.match("set (.*) to");
+            var b = x.match("to (.*)");
+            var index = x.indexOf("define");
+            var tempString = x.substring(0, index);
+            var lineNumber = tempString.split('\n').length;
+            var index2 = x.indexOf("end");
+            var tempString2 = x.substring(0, index2);
+            var lineNumber2 = tempString2.split('\n').length;
+            var lines = x.split('\n');
+            // remove one line, starting at the first position
+            lines.splice(lineNumber - 1, lineNumber2 - 1);
+            // join the array back into a single string
+            x = lines.join('\n');
+
+            x = x.replaceAll(a[1], b[1]);
+            var index3 = x.indexOf("include");
+            var tempString3 = x.substring(0, index3);
+            var lineNumber3 = tempString3.split('\n').length;
+            var lines = x.split('\n');
+            // remove one line, starting at the first position
+            lines.splice(lineNumber3 - 1, lineNumber3);
+            // join the array back into a single string
+            x = lines.join('\n');
+
+
+
+            editor.setValue(x);
+        };
+        document.getElementById("load").style.cssText = "display:none";
+
+        function load() {
+            if (l == 0) {
+                document.getElementById("load").style.cssText = "";
+                document.getElementById("1").innerText = "<<";
+                document.getElementById("2").style.cssText = "display:none";
+                document.getElementById("3").style.cssText = "display:none";
+
+                document.getElementById("9").style.cssText = "display:none";
+                document.getElementById("10").style.cssText = "display:none";
+                document.getElementById("11").style.cssText = "display:none";
+                document.getElementById("about").style.cssText = "display:none";
+                l = 1;
+            } else {
+                document.getElementById("load").style.cssText = "display:none";
+                document.getElementById("1").innerText = "Load";
+                document.getElementById("2").style.cssText = "";
+                document.getElementById("3").style.cssText = "";
+
+                document.getElementById("9").style.cssText = "";
+                document.getElementById("10").style.cssText = "";
+                document.getElementById("11").style.cssText = "";
+                document.getElementById("about").style.cssText = "";
+
+                l = 0;
+            }
+
+        }
+        document.getElementById("sel").style.cssText = "display:none";
+
+        function openTheme() {
+            if (th == 0) {
+                document.getElementById("sel").style.cssText = "";
+                document.getElementById("11").innerText = "<<";
+                document.getElementById("2").style.cssText = "display:none";
+                document.getElementById("3").style.cssText = "display:none";
+
+                document.getElementById("9").style.cssText = "display:none";
+                document.getElementById("10").style.cssText = "display:none";
+                document.getElementById("1").style.cssText = "display:none";
+                document.getElementById("about").style.cssText = "display:none";
+                th = 1;
+            } else {
+                document.getElementById("sel").style.cssText = "display:none";
+                document.getElementById("11").innerText = "Themes";
+                document.getElementById("2").style.cssText = "";
+                document.getElementById("3").style.cssText = "";
+
+                document.getElementById("9").style.cssText = "";
+                document.getElementById("10").style.cssText = "";
+                document.getElementById("1").style.cssText = "";
+                document.getElementById("about").style.cssText = "";
+
+                th = 0;
+            }
+
+        }
+
+        function loadfile(input) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                editor.setValue(e.target.result);
+            }
+            reader.readAsText(input.files[0]);
+        }
+        var input = document.getElementById("select");
+        function selectTheme() {alert(8);
+            var theme = input.options[input.selectedIndex].textContent;
+            editor.setOption("theme", theme);
+            location.hash = "#" + theme;
+        }
+        var choice = (location.hash && location.hash.slice(1)) ||
+            (document.location.search &&
+                decodeURIComponent(document.location.search.slice(1)));
+        if (choice) {
+            input.value = choice;
+            editor.setOption("theme", choice);
+        }
+        CodeMirror.on(window, "hashchange", function() {
+            var theme = location.hash.slice(1);
+            if (theme) {
+                input.value = theme;
+                selectTheme();
+            }
+        });
+
+
+
+
+
+        function saveTextAsFile() {
+            var textToWrite = editor.getValue();
+            var textFileAsBlob = new Blob([textToWrite], {
+                type: 'text/plain'
+            });
+            var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null) {
+                // Chrome allows the link to be clicked
+                // without actually adding it to the DOM.
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            } else {
+                // Firefox requires the link to be added to the DOM
+                // before it can be clicked.
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+
+            downloadLink.click();
+        }
+
+        function destroyClickedElement(event) {
+            document.body.removeChild(event.target);
+        }
+
+        function showCode() {
+            // Generate JavaScript code and display it.
+            Blockly.SparkS.INFINITE_LOOP_TRAP = null;
+            var code = Blockly.SparkS.workspaceToCode(workspace);
+            //alert(code);
+            editor.setValue(code);
+
+        }
+
+        function searchKeyPress(e) {
+            // look for window.event in case event isn't passed in
+            e = e || window.event;
+            if (e.keyCode == 13) {
+
+                editor.setValue("set");
+                document.getElementById("showcode").click();
+                return false;
+            }
+            return true;
+        }
+        /*
+                function runCode() {
+                    // Generate JavaScript code and run it.
+                    window.LoopTrap = 1000;
+                    Blockly.SparkS.INFINITE_LOOP_TRAP =
+                        'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+                    var code = Blockly.SparkS.workspaceToCode(workspace);
+                    Blockly.SparkS.INFINITE_LOOP_TRAP = null;
+                    try {
+                        eval(code);
+                    } catch (e) {
+                        alert(e);
+                    }
+                }*/
+    </script>
+
+</body>
+
+</html>

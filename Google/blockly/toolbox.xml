@@ -1,0 +1,150 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="Header" colour="#a55b5b">
+    <block type="include_library">
+      <field name="NAME">&lt;item&gt;</field>
+    </block>
+    <block type="require_as_linkertype">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2"></field>
+      <field name="name3"></field>
+      <field name="name4"></field>
+    </block>
+    <block type="bind">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2"></field>
+    </block>
+    <block type="order">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="order_item">
+      <field name="name1">asc</field>
+      <field name="name2">item</field>
+    </block>
+    <block type="filter">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="filteritemop">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2">lteq</field>
+      <field name="name3"></field>
+    </block>
+    <block type="filteritembrac">
+      <field name="name1">item</field>
+      <field name="name2"></field>
+      <field name="name3"></field>
+    </block>
+    <block type="testpoint">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="provide_parameter">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="optional"></block>
+    <block type="optional_sentence_enum">
+      <field name="name1"></field>
+    </block>
+    <block type="optional_sentence_enum_param">
+      <field name="name1"></field>
+    </block>
+    <block type="optional_sentence_default">
+      <field name="name"></field>
+    </block>
+    <block type="filteritembrac">
+      <field name="name1">item</field>
+      <field name="name2"></field>
+      <field name="name3"></field>
+    </block>
+    <block type="testgroup">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2">&lt;item&gt;</field>
+    </block>
+  </category>
+  <category name="Body" colour="#5ba5a5">
+    <block type="shotdown"></block>
+    <block type="func_call">
+      <field name="name1">item</field>
+      <field name="name2">item</field>
+    </block>
+    <block type="func_call_paran"></block>
+    <block type="func_call_paran_arg">
+      <field name="name1"></field>
+    </block>
+    <block type="func_call_paran_arg2">
+      <field name="name1"></field>
+    </block>
+    <block type="constant">
+      <field name="NAME">&lt;name&gt;</field>
+    </block>
+    <block type="try"></block>
+    <block type="on_do">
+      <field name="name">&lt;item&gt;</field>
+    </block>
+    <block type="define">
+      <field name="name">item</field>
+    </block>
+    <block type="fill">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2">&lt;item&gt;</field>
+    </block>
+    <block type="expand">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="expand_replace">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2">&lt;item&gt;</field>
+    </block>
+    <block type="expand_replace_with">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2">&lt;item&gt;</field>
+    </block>
+    <block type="if_do"></block>
+    <block type="else_if_do"></block>
+    <block type="else"></block>
+    <block type="compare">
+      <field name="symbols">equal</field>
+    </block>
+    <block type="not"></block>
+    <block type="bool_expr_main">
+      <field name="1">eq</field>
+    </block>
+    <block type="true_false">
+      <field name="symbols">true</field>
+    </block>
+    <block type="for_each">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="for_each_range">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="for_each_range_fiter">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="for_each_range_order">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="for_each_range_brac_id">
+      <field name="name1">&lt;int&gt;</field>
+      <field name="name2">&lt;int&gt;</field>
+    </block>
+    <block type="set">
+      <field name="variable">&lt;item&gt;</field>
+    </block>
+    <block type="set2">
+      <field name="name1">&lt;item&gt;</field>
+      <field name="name2">&lt;item&gt;</field>
+    </block>
+    <block type="sleep_for">
+      <field name="name1">&lt;item&gt;</field>
+    </block>
+    <block type="number">
+      <field name="number">0</field>
+    </block>
+    <block type="string">
+      <field name="string"></field>
+    </block>
+    <block type="comment_start"></block>
+    <block type="comment_finish"></block>
+    <block type="line_comment"></block>
+  </category>
+  <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+</xml>

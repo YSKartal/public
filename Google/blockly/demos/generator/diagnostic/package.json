@@ -1,0 +1,28 @@
+{
+    "name": "bug-report",
+    "main": "./lib/bug-report",
+    "version": "0.7.1",
+    "description": "Dumps relevant information into a nicely formatted Markdown file for easily reporting a bug to VisualSparkS or a third-party package.",
+    "keywords": ["bug", "reporting"],
+    "repository": "https://gitlab.ceng.metu.edu.tr/Harambe/VisualSparkS",
+    "license": "MIT",
+    "engines": {
+        "atom": ">=1.4.0 <2.0.0"
+    },
+    "dependencies": {
+        "atom-space-pen-views": "^2.0.3",
+        "moment": "^2.8.0",
+        "plist": "^1.1.0",
+        "request": "~2.67.0"
+    },
+    "devDependencies": {
+        "atomdoc": "^1",
+        "grunt-atomdoc": "^1",
+        "grunt-cli": "~0.1.8",
+        "grunt": "~0.4.1",
+        "grunt-shell": "~0.2.2",
+        "grunt-coffeelint": "0.0.6",
+        "rimraf": "~2.1",
+        "temp": "~0.6.0"
+    }
+}

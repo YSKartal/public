@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Blockly Demo: Generating SparkS</title>
+    <script src="lib/codemirror.js"></script>
+    <script src="lib/require.js"></script>
+    <script src="generated-parser/SparkS_v2Visitor.js"></script>
+    <script src="generated-parser/SparkS_v2Parser.js"></script>
+    <script src="generated-parser/SparkS_v2Lexer.js"></script>
+    <script src="generated-parser/SparkS_v2Parser.js"></script>
+    <script src="indent.js"></script>
+    <link rel="stylesheet" href="addon/dialog/dialog.css">
+    <link rel="stylesheet" href="addon/search/matchesonscrollbar.css">
+    <script src="mode/xml/xml.js"></script>
+
+    <script src="../addon/selection/mark-selection.js"></script>
+    <link rel="stylesheet" href="addon/hint/show-hint.css">
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <script src="mode/sparks/sparks.js"></script>
+    <script src="../../blockly_compressed.js"></script>
+    <script src="../../blocks_compressed.js"></script>
+    <script src="../../sparks_compressed.js"></script>
+    <script src="../../generators/sparks.js"></script>
+    <script src="../../generators/sparks/body.js"></script>
+    <script src="../../generators/sparks/header.js"></script>
+    <script src="../../generators/sparks/procedures.js"></script>
+    <script src="../../generators/sparks/others.js"></script>
+    <script src="../../blocks/body.js"></script>
+    <script src="../../blocks/header.js"></script>
+    <script src="../../blocks/procedures.js"></script>
+    <script src="../../blocks/others.js"></script>
+    <!--script src="../../javascript_compressed.js"></script-->
+    <script src="../../msg/js/en.js"></script>
+    <script src="/diagnostic/lib/panel-view.js"></script>
+    <script src="/diagnostic/grunt-file.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="rudimentary/show-hint.css">
+    <link rel="stylesheet" href="rudimentary/foldgutter.css">
+    <script src="macro-expansion/macro-expansion/bin/preprocessor"></script>
+    <script src="macro-expansion/macro-expansion/Preprocessor.js"></script>
+    <script src="macro-expansion/macro-expansion/package.json"></script>
+    <script src="rudimentary/matchbrackets.js"></script>
+    <script src="rudimentary/closebrackets.js"></script>
+    <script src="rudimentary/foldcode.js"></script>
+    <script src="rudimentary/indent-fold.js"></script>
+    <script src="rudimentary/brace-fold.js"></script>
+    <script src="rudimentary/comment-fold.js"></script>
+    <script src="rudimentary/foldgutter.js"></script>
+    <!--script src="rudimentary/sparks-hint.js"></script-->
+    <script src="rudimentary/anyword-hint.js"></script>
+    <script src="rudimentary/show-hint.js"></script>
+    <script src="rudimentary/match-highlighter.js"></script>
+    <script src="rudimentary/annotatescrollbar.js"></script>
+    <script src="rudimentary/matchesoncrollbar.js"></script>
+    <script src="rudimentary/lint/lint.js"></script>
+    <script src="rudimentary/lint/sparks-lint.js"></script>
+    <script src="selection/mark-selection.js"></script>
+    <script src="selection/active-line.js"></script>
+    <script src="selection/selection-pointer.js"></script>
+    <script src="display/fullscreen.js"></script>
+    <script src="mode/sparks/sparks.js"></script>
+
+    <link rel="stylesheet" href="addon/dialog/dialog.css">
+    <link rel="stylesheet" href="rudimentary/matchesonscrollbar.css">
+    <link rel="stylesheet" href="display/fullscreen.css">
+    <link rel="stylesheet" href="rudimentary/lint/lint.css">
+    <script src="mode/xml/xml.js"></script>
+    <script src="addon/dialog/dialog.js"></script>
+    <script src="rudimentary/searchcursor.js"></script>
+    <script src="addon/search/search.js"></script>
+    <link rel="stylesheet" href="addon/hint/show-hint.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"></script>
+    <script src="addon/dialog/dialog.js"></script>
+    <script src="addon/search/searchcursor.js"></script>
+    <script src="addon/search/search.js"></script>
+    <link rel="stylesheet" href="../theme/3024-day.css">
+    <!-- temalar -->
+    <link rel="stylesheet" href="theme/base16-dark.css">
+    <link rel="stylesheet" href="theme/eclipse.css">
+    <link rel="stylesheet" href="theme/monokai.css">
+
+    <!-- STYLE FILE -->
+    <link rel="stylesheet" href="final.css">
+</head>
+<style type="text/css">
+      .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+      .CodeMirror-focused .cm-matchhighlight {
+        background-position: bottom;
+        background-repeat: repeat-x;
+      }
+      .cm-matchhighlight {background-color: lightgreen}
+      .CodeMirror-selection-highlight-scrollbar {background-color: green}
+</style>
+
+<body>
+    <div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div id="head" class="navbar-header">
+                    <a class="navbar-brand" href="#">Sparkly</a>
+                </div>
+                <button id="drpmenu2" onclick="showCode()" class="btn btn-primary dropdown-toggle" type="button">Show Code
+  <span class="left-caret"></span></button>
+                <button id="drpmenu3" onclick="toBlock()" class="btn btn-primary dropdown-toggle" type="button">Show Block
+  <span class="left-caret"></span></button>
+                <button id="drpmenu4" onclick="test()" class="btn btn-primary dropdown-toggle" type="button">Test
+  <span class="left-caret"></span></button>
+                <button id="drpmenu5" onclick="vote()" class="btn btn-primary dropdown-toggle" type="button">Vote
+  <span class="left-caret"></span></button>
+
+                <button id="drpmenu" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu
+  <span class="caret"></span></button>
+                <ul id="drpmenuitems" class="dropdown-menu">
+                    <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Load</a>
+                        <ul class="dropdown-menu">
+                            <li><input tabindex="-1" id="loaad" type="file" accept=".ss" onchange="loadfile(this)"></li>
+                        </ul>
+                    </li>
+                    <li><a href="#news" id="dwn-btn">Save</a></li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" onclick="find()" href="#">Search</a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="#news" id="56" onclick="findPrev()">Prev</a></li>
+                            <li><a tabindex="-1" href="#news" id="56" onclick="findNext()">Next</a></li>
+                            <li><a tabindex="-1" href="#find" id="74" onclick="replace()">Replace</a></li>
+                            <li><a tabindex="-1" href="#find" id="84" onclick="replaceAll()">Replace All</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#contact" id="9" onclick="changecodemirror()">Toggle</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Themes</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <select onchange="selectTheme()" id=select>
+                            <option selected>default</option>
+                            <option>base16-dark</option>
+                            <option>eclipse</option>
+                            <option>monokai</option>
+                            </select></p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#about" onclick="changeauto()" id="turnAuto">Turn off Auto</a></li>
+                    <li><a href="#about" id="11">About Sparkly</a></li>
+
+                </ul>
+            </div>
+        </nav>
+        <td><input id="inputFileNameToSaveAs"></input>
+        </td>
+        <div class="button dropdown">
+            <div id="scrmnu" class="scrollmenu">
+                <!-- bu gizli bölüm, menu seçeneklerinin çalışması için gerekli-->
+                <a href="#home" id="1" onclick="load()">Load </a>
+                <input id="load" type="file" name="LastName" onchange="loadfile(this)" id="Load">
+                <a href="#news" id="2" onclick="saveTextAsFile()">Save</a>
+                <a href="#news" id="3" onclick="openFind()">Find</a>
+                <a href="#news" id="4" onclick="find()">Find</a>
+                <a href="#news" id="5" onclick="findPrev()">Prev</a>
+                <a href="#news" id="6" onclick="findNext()">Next</a>
+                <a href="#find" id="7" onclick="replace()">Replace</a>
+                <a href="#find" id="8" onclick="replaceAll()">Replace All</a>
+                <a href="#contact" id="9" onclick="changecodemirror()">Toggle</a>
+                <a href="#about" id="10" onclick="macro()">Macro</a>
+                <a href="#about" id="11" onclick="openTheme()">Themes</a>
+                <a href="#news" id="about">About</a>
+            </div>
+            <div id="workspace">
+                <div id="code">
+                </div>
+                <div id="blocklyDiv"></div>
+            </div>
+
+            <xml id="toolbox" style="display: none">
+                <category name="testProcess" colour="#dce97a">
+                    <block type="testprocess">
+                    <field name="tpName"></field>
+                    </block>
+                    <block id="b74" type="undefined_wrapper">
+                    <field id="f89" name="u_code"></field>
+                    </block>
+                </category>
+                <sep></sep>
+                <sep></sep>
+                <category name="Include" colour="#a55b5b">
+                    <block type="include_library">
+                        <field name="NAME">Dialog</field>
+                    </block>
+                </category>
+                <category name="Require" colour="#a55b5b">
+                    <block type="require_as_linkertype">
+                        <field name="name1">var_req</field>
+                        <field name="name2"></field>
+                        <field name="name3"></field>
+                        <field name="name4"></field>
+                    </block>
+                </category>
+                <category name="Bind" colour="#a55b5b">
+                    <block type="bind">
+                        <field name="name1">var_TestType</field>
+                        <field name="name2"></field>
+                    </block>
+                </category>
+                <category name="Order" colour="#a55b5b">
+                    <block type="order">
+                        <field name="name1">var_or</field>
+                    </block>
+                    <block type="order_element">
+                        <field name="NAME">descending</field>
+                        <field name="ID">var_par</field>
+                    </block>
+                </category>
+                <category name="Filter" colour="#a55b5b">
+                    <block type="filter">
+                        <field name="name1">var_fil</field>
+                    </block>
+                    <block type="filter_single">
+                        <field name="name1">var_Frequency</field>
+                        <field name="name"><</field>
+                                <field name="namee"> </field>
+                    </block>
+                    <block type="filter_double">
+                        <field name="name1">var_Frequency</field>
+                        <field name="namee"> </field>
+                        <field name="namee2"> </field>
+                    </block>
+                </category>
+                <category name="Test Point" colour="#a55b5b">
+                    <block type="testpoint">
+                        <field name="name1">var_tp</field>
+                        <value name="2">
+                            <block type="provide_parameter">
+                                <field name="name1">var_par</field>
+                            </block>
+                        </value>
+                        <value name="3">
+                            <block type="measure_parameter">
+                                <field name="name1">var_mea</field>
+                                <field name="name2"> </field>
+                            </block>
+                        </value>
+                    </block>
+                    <block type="provide_parameter">
+                        <field name="name1">var_par</field>
+                    </block>
+                    <block type="optional"></block>
+                    <block type="optional_sentence_enum1">
+                        <field name="name1"></field>
+                    </block>
+                    <block type="optional_sentence_enum">
+                        <field name="name1"></field>
+                    </block>
+                    <block type="optional_sentence_enum_param">
+                        <field name="name1"></field>
+                    </block>
+                    <block type="optional_sentence_default">
+                        <field name="name"></field>
+                    </block>
+                    <block type="measure_parameter">
+                        <field name="name1">var_mea</field>
+                        <field name="name2"> </field>
+                    </block>
+                </category>
+                <category name="Test Point Like" colour="#a55b5b">
+                    <block type="testpointlike">
+                        <field name="name1">var_tpl</field>
+                        <field name="name2">var_tp</field>
+                    </block>
+                </category>
+                <category name="Test Group" colour="#a55b5b">
+                    <block type="testgroup">
+                        <field name="name1">var_tg</field>
+                        <field name="name2">var_tp</field>
+                    </block>
+                </category>
+                <category name="Comment Out" colour="#a55b5b">
+                    <block type="line_comment_header"></block>
+                    <block type="lines_comment_header"></block>
+                    <block type="lines_collapse_header"></block>
+                </category>
+                <category name="Define" colour="#a55b5b">
+                    <block type="define">
+                        <field name="name">var_def</field>
+                    </block>
+                    <block type="fill">
+                        <field name="name1">var_fill</field>
+                        <field name="name2">var_fill2</field>
+                    </block>
+                </category>
+                <sep></sep>
+                <sep></sep>
+                <category name="Shutdown" colour="#5ba5a5">
+                    <block type="shutdown"></block>
+                </category>
+                <category name="Function Call" colour="#5ba5a5">
+                    <block type="func_call">
+                        <field name="name1">var_call</field>
+                        <field name="name2">var_call2</field>
+                    </block>
+                    <block type="func_call_paran"></block>
+                    <block type="func_call_paran_arg">
+                        <field name="name1"></field>
+                    </block>
+                    <block type="func_call_arithExpr">
+                        <field name="symbols">mult</field>
+                    </block>
+                    <block type="func_call_arith_parameter">
+                        <field name="name1">var_par</field>
+                    </block>
+                    <block type="func_call_number">
+                        <field name="number">0</field>
+                    </block>
+                    <block type="func_call_enumber">
+                        <field name="name1">e</field>
+                        <field name="number">0</field>
+                    </block>
+                    <block type="func_call_comma">
+                    </block>
+                </category>
+                <category name="Constant Decleration" colour="#5ba5a5">
+                    <block type="constant">
+                        <field name="NAME">var_cons</field>
+                    </block>
+                </category>
+                <category name="Try" colour="#5ba5a5">
+                    <block type="controls_try"></block>
+                    <block type="tryexception">
+                        <field name="name1">var_try</field>
+                    </block>
+                </category>
+                <category name="Expand" colour="#5ba5a5">
+                    <block type="expand">
+                        <field name="name1">var_def</field>
+                    </block>
+                    <block type="expand_replace">
+                        <field name="name1">var_rep</field>
+                        <field name="name2">var_rep2</field>
+                    </block>
+                    <block type="expand_replace_with">
+                        <field name="name1">var_rep</field>
+                        <field name="name2">var_rep2</field>
+                    </block>
+                </category>
+                <category name="If Else" colour="#5ba5a5">
+                    <block type="controls_if_2"></block>
+                    <block type="compare">
+                        <field name="symbols">greater</field>
+                    </block>
+                    <block type="not"></block>
+                    <block type="bool_expr_main">
+                        <field name="1">xor</field>
+                    </block>
+                    <block type="eq_neq">
+                        <field name="1">=</field>
+                    </block>
+                    <block type="eq_neq2">
+                        <field name="1">=</field>
+                    </block>
+                    <block type="bool_expr_sub">
+                    </block>
+                    <block type="true_false">
+                        <field name="symbols">true</field>
+                    </block>
+                    <block type="func_call2">
+                        <field name="name1">var_call</field>
+                        <field name="name2">var_call2</field>
+                    </block>
+                    <block type="func_call_paran"></block>
+                    <block type="func_call_paran_arg">
+                        <field name="name1"></field>
+                    </block>
+                </category>
+                <category name="For each" colour="#5ba5a5">
+                    <block type="for_each">
+                        <field name="name1">var1</field>
+                        <value name="1">
+                            <block type="for_each_range">
+                                <field name="name1">var2</field>
+                                <value name="1">
+                                    <block type="for_each_range_filter">
+                                        <field name="name1">var3</field>
+                                    </block>
+                                </value>
+                                <value name="2">
+                                    <block type="for_each_range_order">
+                                        <field name="name1">var4</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </value>
+                    </block>
+                    <block type="for_each">
+                        <field name="name1">var1</field>
+                        <value name="1">
+                            <block type="for_each_range_brac_id">
+                                <field name="name1">var2</field>
+                                <field name="name2">var3</field>
+                            </block>
+                        </value>
+                    </block>
+                    <block type="for_each">
+                        <field name="name1">var1</field>
+                        <value name="1">
+                            <block type="for_each_range_brac_int">
+                                <value name="1">
+                                    <block type="number">
+                                        <field name="number">0</field>
+                                    </block>
+                                </value>
+                                <value name="2">
+                                    <block type="number">
+                                        <field name="number">0</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </value>
+                    </block>
+                    <block type="enumber">
+                        <field name="name1">e</field>
+                        <field name="number">0</field>
+                    </block>
+                </category>
+                <category name="Set" colour="#5ba5a5">
+                    <block type="set1">
+                        <field name="name1">var_set</field>
+                    </block>
+                    <block type="set2">
+                        <field name="name1">var_set1</field>
+                        <field name="name2">var_set2</field>
+                    </block>
+                    <block type="func_call2">
+                        <field name="name1">var_call</field>
+                        <field name="name2">var_call2</field>
+                    </block>
+                </category>
+                <category name="Sleep" colour="#5ba5a5">
+                    <block type="sleep_for">
+                        <field name="name1">seconds</field>
+                    </block>
+                </category>
+                <category name="Arithmetic Expression" colour="#5ba5a5">
+                    <block type="arithExpr">
+                        <field name="symbols">mult</field>
+                    </block>
+                    <block type="arithExprSub">
+                    </block>
+                    <block type="provide_parameter3">
+                        <field name="name1">var_par3</field>
+                    </block>
+                    <block type="func_call2">
+                        <field name="name1">var_call</field>
+                        <field name="name2">var_call2</field>
+                    </block>
+                </category>
+                <category name="Number and String" colour="#5ba5a5">
+                    <block type="number">
+                        <field name="number">0</field>
+                    </block>
+                    <block type="enumber">
+                        <field name="name1">e</field>
+                        <field name="number">0</field>
+                    </block>
+                    <block type="string">
+                        <field name="string"></field>
+                    </block>
+                </category>
+                <category name="Comment Out" colour="#5ba5a5">
+                    <block type="line_comment"></block>
+                    <block type="lines_comment"></block>
+                    <block type="lines_collapse"></block>
+                </category>
+                <sep></sep>
+                <sep></sep>
+                <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+            </xml>
+            <xml id="startBlocks" style="display: none">
+                <block type="controls_if" inline="false" x="20" y="20">
+                    <mutation else="1"></mutation>
+                    <value name="IF0">
+                        <block type="logic_compare" inline="true">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                                <block type="math_arithmetic" inline="true">
+                                    <field name="OP">MULTIPLY</field>
+                                    <value name="A">
+                                        <block type="math_number">
+                                            <field name="NUM">6</field>
+                                        </block>
+                                    </value>
+                                    <value name="B">
+                                        <block type="math_number">
+                                            <field name="NUM">7</field>
+                                        </block>
+                                    </value>
+                                </block>
+                            </value>
+                            <value name="B">
+                                <block type="math_number">
+                                    <field name="NUM">42</field>
+                                </block>
+                            </value>
+                        </block>
+                    </value>
+                    <statement name="DO0">
+                        <block type="text_print" inline="false">
+                            <value name="TEXT">
+                                <block type="text">
+                                    <field name="TEXT">Don't panic</field>
+                                </block>
+                            </value>
+                        </block>
+                    </statement>
+                    <statement name="ELSE">
+                        <block type="text_print" inline="false">
+                            <value name="TEXT">
+                                <block type="text">
+                                    <field name="TEXT">Panic</field>
+                                </block>
+                            </value>
+                        </block>
+                    </statement>
+                </block>
+            </xml>
+
+            <script>
+                var antlr4 = require('antlr4/index');
+                var Lexer = require('generated-parser/SparkS_v2Lexer');
+                var Parser = require('generated-parser/SparkS_v2Parser');
+                var Visitor = require('generated-parser/SparkS_v2Visitor');
+                //var Visitor = require('./Visitor');
+
+                var input = "test input";
+                var chars = new antlr4.InputStream(input);
+                var lexer = new SparkS_v2Lexer(chars);
+                var tokens = new antlr4.CommonTokenStream(lexer);
+                var parser = new Parser.SparkS_v2Parser(tokens);
+                var visitor = new SparkS_v2Visitor();
+                //parser.buildParseTrees = true;
+                //visitor.visitScript(parser);
+                //SparkS_v2Parser.buildParseTrees = true;
+                //var tree = SparkS_v2Parser.parse();
+
+                //  VARIABLES
+                var tpname="";
+                var th = 0; //open theme
+                var x = 0; //change codemirror
+                var m = 1; //show menu
+                var f1 = 0; //open find
+                var l = 0; //load
+                var a = 0;
+                var startx = 0;
+                var starty = 0;
+                var finishx = 0;
+                var finishy = 0;
+                var noofnext = 0;
+                var noofvalue = 14;
+                var noofstate = 0;
+                var success = 0;
+                var testno = 0;
+                var testcntr = 0;
+                var infilter=0;
+                var tool = '<xml>';
+                tool += '  <block type="controls_if"></block>';
+                tool += '  <block type="controls_whileUntil"></block>';
+                tool += '</xml>';
+                var workspace = Blockly.inject('blocklyDiv', {
+                    media: '../../media/',
+                    toolbox: document.getElementById('toolbox'),
+                    zoom:
+                    {
+                        controls: true,
+                        wheel: true,
+                        startScale: 1.0,
+                        maxScale: 3,
+                        minScale: 0.3,
+                        scaleSpeed: 1.2
+                    },
+                    trashcan: true
+                });
+
+                var editor = CodeMirror(document.getElementById("code"), {
+                    mode: "sparks",
+                    tabSize: 5,
+                    lineNumbers: true,
+                    firstLineNumber: 1,
+                    smartIndent: true,
+                    indentUnit: 5,
+                    styleActiveLine: true,
+                    styleSelectedText: true,
+                    selectionPointer: true,
+                    matchBrackets: true,
+                    autoCloseBrackets: true,
+                    highlightSelectionMatches: true,
+                    showMatchesOnScrollbar: true,
+                    annotateScrollbar: true,
+                    showHint: CodeMirror.hint.anyword,
+                    lint: CodeMirror.lint.sparks,
+                    lint: { lintOnChange: false },
+                    foldGutter: {
+                        rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.indent, CodeMirror.fold.comment, CodeMirror.fold.brace)
+                    },
+                    gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+
+
+                    extraKeys: {
+                        "Ctrl-Q": function (cm) {
+                            cm.foldCode(cm.getCursor());
+                        },
+                        "Ctrl-S": function () { // Save
+                            document.getElementById("dwn-btn").click();
+                        },
+                        "Ctrl-L": function () { // Load
+                            document.getElementById("loaad").click();
+                        },
+                        "Ctrl-Alt-A": function () { // Turn on/off Autoconversion
+                            document.getElementById("turnAuto").click();
+                        },
+                        "Ctrl-Alt-B": function () { // Show Block
+                            document.getElementById("drpmenu3").click();
+                        },
+                        "Ctrl-Alt-C": function () { // Show Code
+                            document.getElementById("drpmenu2").click();
+                        },
+                        "Ctrl-Space": "autocomplete",
+                        "F11": function (cm) {
+                            cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                        },
+                        "Esc": function (cm) {
+                            if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                        }
+                    }
+                });
+                $('.dropdown-menu').click(function (e) {
+                    e.stopPropagation();
+                });
+
+                //editor.setValue("include library deneme \nbind fer to refer \ntestGroup x testPoint y");
+                //editor.setValue('define X as Y\nSHUTDOWN:\nend define'); //testPoint var_tpl like var_tp\norder var_or\n  descending var_par\nend order\nbind var1 to "string"\ninclude library w\ninclude library e\ninclude library r\nbind fer to "refer" \nrequire var1 as linkerType "1" testType "2" interfaceName "3"\ntestGroup x testPoint y\nSHUTDOWN:\nset ID1 to ID2\n')
+                //order var_or\n  descending var_par\nend order\n
+                // set ID1 to ID2\n
+                function typeCheck(type) {
+                    if (type == "optional" || // has left input
+                        type == "optional_sentence_enum1" ||
+                        type == "optional_sentence_enum" ||
+                        type == "optional_sentence_enum_param" ||
+                        type == "optional_sentence_default" ||
+                        type == "tp_space" ||
+                        type == "func_call_paran" ||
+                        type == "func_call_paran_arg" ||
+                        type == "func_call_arithExpr" ||
+                        type == "func_call_arith_parameter" ||
+                        type == "func_call_number" ||
+                        type == "func_call_enumber" ||
+                        type == "func_call_comma" ||
+                        type == "tryexception" ||
+                        type == "expand_replace" ||
+                        type == "expand_replace_with" ||
+                        type == "compare" ||
+                        type == "not" ||
+                        type == "bool_expr_main" ||
+                        type == "eq_neq" ||
+                        type == "eq_neq2" ||
+                        type == "bool_expr_sub" ||
+                        type == "true_false" ||
+                        type == "func_call2" ||
+                        type == "func_call_paran" ||
+                        type == "func_call_paran_arg" ||
+                        type == "func_call_paran_arg2" ||
+                        type == "if_space" ||
+                        type == "enumber" ||
+                        type == "for_space" ||
+                        type == "func_call2" ||
+                        type == "arithExpr" ||
+                        type == "arithExprSub" ||
+                        type == "provide_parameter3" ||
+                        type == "func_call2" ||
+                        type == "number" ||
+                        type == "string") {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+                function findLeftBlock (block) {
+                    if (typeCheck(block.type) && block.getParent() !== null) { // has left input
+                        var parentBlock = block.getParent();
+                        if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                            parentBlock = parentBlock.getParent();
+                            if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                parentBlock = parentBlock.getParent();
+                                if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                    parentBlock = parentBlock.getParent();
+                                    if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                        parentBlock = parentBlock.getParent();
+                                        if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                            parentBlock = parentBlock.getParent();
+                                            if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                                parentBlock = parentBlock.getParent();
+                                                if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                                    parentBlock = parentBlock.getParent();
+                                                    if (typeCheck(parentBlock.type) && parentBlock.getParent() != null) {
+                                                        parentBlock = parentBlock.getParent();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return parentBlock;
+                    }
+                    else {
+                        return block;
+                    }
+                }
+
+                function editString() {
+                    var selectedBlock;
+                    var str = Blockly.selected.toString();
+                    var type = Blockly.selected.type;
+                    var lenOfStr = str.length;
+                    var i = 0;
+                    var numberOfSpace = 0;
+
+                    if (typeCheck(Blockly.selected.type)) { // has left input
+                        selectedBlock = findLeftBlock(Blockly.selected);
+                        str = selectedBlock.toString();
+                        type = selectedBlock.type;
+                        lenOfStr = str.length;
+                    }
+
+                    if (type == "require_as_linkertype") {
+                        i=13;
+                        for (;i<lenOfStr;i++) {
+                            if (i > 12 && str[i-5] == "c" && str[i-4] == "e" && str[i-3] == "N" && str[i-2] == "a" && str[i-1] == "m" && str[i] == "e") {
+                                str = str.substr(0, i-13);
+                                break;
+                            }
+                        }
+                    }
+                    else if (type == "expand") {
+
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == ",") {
+                                str = str.substr(0,i) + "\n,\n" + str.substr(i+1);
+                                i = i + 4;
+                                lenOfStr = str.length;
+                            }
+                        }
+                    }
+                    /*else if (type == "order") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 2) {
+                                    str = str.substr(0, i) + "\n" + str.substr(i + 4);
+                                    lenOfStr = str.length;
+                                }
+                                else if (numberOfSpace == 4) {
+                                    str = str.substr(0, i);
+                                    break;
+                                }
+                            }
+                        }
+                    }*/
+                    else if (type == "order") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 2) {
+                                    if (str[i+1] == "?") {
+                                        str = str.substr(0, i);
+                                        break;
+                                    }
+                                    else {
+                                        str = str.substr(0, i) + "\n" + str.substr(i + 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (type == "filter") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 2) {
+                                    if (str[i+1] == "?") {
+                                        str = str.substr(0, i);
+                                        break;
+                                    }
+                                    else {
+                                        str = str.substr(0, i) + "\n" + str.substr(i + 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (type == "testpoint") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 2) {
+                                    str = str.substr(0, i) + "\n" + str.substr(i + 1);
+                                }
+                                if (numberOfSpace == 3) {
+                                    str = str.substr(0, i) + "\n" + str.substr(i + 1);
+                                }
+                            }
+                            if (i > 5 && str[i-6]=="m" && str[i-5]=="e" && str[i-4]=="a" && str[i-3]=="s" && str[i-2]=="u" && str[i-1]=="r" && str[i]=="e") {
+                                str = str.substr(0,i-7);
+                                break;
+                            }
+                        }
+                    }
+                    else if (type == "lines_comment_header" || type == "lines_comment") {
+                        for (;i<lenOfStr;i++) {
+                            if (i == 3 && str[i] == "?") {
+                                str = str.substr(0, i - 1) + " " + str.substr(i + 2);
+                                break;
+                            }
+                            else if (i == 3) { // if it has a nested block, does not work.
+                                str = str.substr(0, 2) + str.substr(3,lenOfStr - 5);
+                                //window.alert(str);
+                                break;
+                            }
+                        }
+                    }
+                    else if (type == "lines_collapse_header" || type == "lines_collapse") {
+                        for (;i<lenOfStr;i++) {
+                            if (i == 9 && str[i] != "?") {
+                                str = str.substr(i);
+                                break;
+                            }
+                            else if (i == 9) { // if it has a nested block, does not work.
+                                str = "";
+                                break;
+                            }
+                        }
+                    }
+                    else if (type == "define") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 3) {
+                                    if (str[i+1] == "?") {
+                                        str = str.substr(0, i);
+                                        break;
+                                    }
+                                    else {
+                                        str = str.substr(0, i) + "\n" + str.substr(i + 1);
+                                    }
+                                }
+                                if (numberOfSpace == 7) {
+                                    str = str.substr(0, i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else if (type == "fill") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 4) {
+                                    if (str[i+1] == "?") {
+                                        str = str.substr(0, i);
+                                        break;
+                                    }
+                                    else {
+                                        str = str.substr(0, i) + "\n" + str.substr(i + 1);
+                                        break;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    else if (type == "controls_try") {
+                        for (;i<lenOfStr;i++) {
+                            if (str[i] == " ") {
+                                numberOfSpace++;
+                                if (numberOfSpace == 1) {
+                                    if (str[i+4] == "?") {
+                                        str = str.substr(0, i);
+                                        break;
+                                    }
+                                    else {
+                                        str = str.substr(0, i) + "\n" + str.substr(i + 4);
+                                        i = i + 1;
+                                        lenOfStr = str.length;
+                                    }
+                                }
+                            }
+                            if (i>0 && str[i-1] == "o" && str[i] == "n") {
+                                str = str.substr(0, i-2);
+                                break;
+                            }
+                        }
+                    }
+                    else if (type == "controls_if_2") {
+                        for (;i<lenOfStr;i++) {
+                            if (i>0 && str[i-1] == "d" && str[i] == "o") {
+                                if (str[i+2] == "?") {
+                                    str = str.substr(0, i-2) + " then";
+                                    break;
+                                }
+                                else {
+                                    str = str.substr(0, i-2) + " then\n" + str.substr(i + 2);
+                                    i = i + 3;
+                                    lenOfStr = str.length;
+                                }
+                            }
+                            if (i>2 && str[i-3] == "e" && str[i-2] == "l" && str[i-1] == "s" && str[i] == "e") {
+                                str = str.substr(0, i-4);
+                                break;
+                            }
+                        }
+                    }
+                    else if (type == "for_each") {
+                        for (;i<lenOfStr;i++) {
+                            if (i>0 && str[i-1] == "d" && str[i] == "o") {
+                                if (str[i+2] == "?") {
+                                    str = str.substr(0,i+1);
+                                    break;
+                                }
+                                else {
+                                    str = str.substr(0, i + 1) + "\n" + str.substr(i + 2);
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+
+                    i = 0;
+                    lenOfStr = str.length;
+                    for ( ; i<lenOfStr ; i++) { // delete spaces
+                        if (str[i] == " " || str[i] == "?") {
+                            str = str.substr(0, i) + str.substr(i + 1);
+                            i--;
+                            lenOfStr--;
+                        }
+                    }
+                    return str;
+                }
+
+                function findLine(strr) {
+                    var numberOfExist = 0;
+                    var line = -1;
+                    var isNested = false;
+                    var str = strr;
+                    //window.alert(str);
+                    var text = editor.getValue();
+
+                    var strLines = str.split("\n");
+                    var numberOfLinesOfStr = strLines.length;
+
+                    var textLines = text.split("\n");
+                    var numberOfLinesOfText = textLines.length;
+
+                    if (numberOfLinesOfStr != 0) { // str exists
+                        var i = 0;
+                        for (;i<numberOfLinesOfText;i++) { // comparison each text line
+                            var textLine = textLines[i];
+                            var len = textLine.length;
+                            var j = 0;
+                            for ( ; j<len ; j++) { // delete spaces
+                                if (textLine[j] == " " || textLine[j] == "?") {
+                                    textLine = textLine.substr(0, j) + textLine.substr(j + 1);
+                                    j--;
+                                    len--;
+                                }
+                            }
+                            if (textLine == strLines[0]) {
+                                if (numberOfLinesOfStr == 2) { // nested block
+                                    if (strLines[1] == "?") { // input is empty
+                                        numberOfExist++;
+                                        line = i;
+                                        isNested = true;
+                                    }
+                                    else { // input is not empty
+                                        if (i+1 < numberOfLinesOfText) {
+                                            textLine = textLines[i+1];
+                                            len = textLine.length;
+                                            j = 0;
+                                            for ( ; j<len ; j++) { // delete spaces
+                                                if (textLine[j] == " " || textLine[j] == "?") {
+                                                    textLine = textLine.substr(0, j) + textLine.substr(j + 1);
+                                                    j--;
+                                                    len--;
+                                                }
+                                            }
+
+                                            if (textLine == strLines[1]) {
+                                                numberOfExist++;
+                                                line = i;
+                                                isNested = true;
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    numberOfExist++;
+                                    line = i;
+                                }
+                            }
+                        }
+
+                        var lastLine = line + 1;
+                        var firstLine = strLines[0];
+                        var lenOfFirstLine = firstLine.length;
+                        var theWord;
+                        var findingWord;
+                        var isNested = false;
+                        if (lenOfFirstLine > 5 && firstLine.substr(0,6) == "filter") {
+                            isNested = true;
+                            theWord = "filter";
+                            findingWord = "endfilter";
+                        }
+                        else if (lenOfFirstLine > 4 && firstLine.substr(0,5) == "order") {
+                            isNested = true;
+                            theWord = "order";
+                            findingWord = "endorder";
+                        }
+                        else if (lenOfFirstLine > 8 && firstLine.substr(0,9) == "testPoint") {
+                            isNested = true;
+                            theWord = "testPoint";
+                            findingWord = "endtestPoint";
+                        }
+                        else if (lenOfFirstLine > 1 && firstLine.substr(0,2) == "/*") {
+                            isNested = true;
+                            theWord = "/*";
+                            findingWord = "*/";
+                        }
+                        else if (lenOfFirstLine > 5 && firstLine.substr(0,6) == "define") {
+                            isNested = true;
+                            theWord = "define";
+                            findingWord = "enddefine";
+                        }
+                        else if (lenOfFirstLine > 3 && firstLine.substr(0,4) == "fill") {
+                            isNested = true;
+                            theWord = "fill";
+                            findingWord = "endfill";
+                        }
+                        else if (lenOfFirstLine > 2 && firstLine.substr(0,3) == "try") {
+                            isNested = true;
+                            theWord = "try";
+                            findingWord = "endtry";
+                        }
+                        else if (lenOfFirstLine > 1 && firstLine.substr(0,2) == "if") {
+                            isNested = true;
+                            theWord = "if";
+                            findingWord = "endif";
+                        }
+                        else if (lenOfFirstLine > 2 && firstLine.substr(0,3) == "for") {
+                            isNested = true;
+                            theWord = "for";
+                            findingWord = "endfor";
+                        }
+                        else if (lenOfFirstLine > 5 && firstLine.substr(0,6) == "expand") {
+                            lastLine = lastLine + strLines.length - 1;
+                        }
+
+                        if (isNested) {
+                            var k = line + 1;
+                            var totalNumber = 0;
+                            for ( ; k < numberOfLinesOfText ; k++) { // comparison each text line
+                                textLine = textLines[k];
+                                len = textLine.length;
+                                j = 0;
+                                for (; j < len; j++) { // delete spaces
+                                    if (textLine[j] == " " || textLine[j] == "?") {
+                                        textLine = textLine.substr(0, j) + textLine.substr(j + 1);
+                                        j--;
+                                        len--;
+                                    }
+                                }
+                                if (textLine.includes(findingWord)) {
+                                    if (totalNumber == 0) {
+                                        lastLine = k + 1;
+                                        break;
+                                    }
+                                    else {
+                                        totalNumber--;
+                                    }
+                                }
+                                else if (textLine.includes(theWord)) {
+                                    totalNumber++;
+                                }
+                            }
+                        }
+
+                        if (numberOfExist == 1) {
+                            editor.markText({
+                                line: line - 1
+                            }, {
+                                line: lastLine - 1
+                            }, {
+                                className: "styled-background"
+                            });
+                        }
+                    }
+
+                }
+
+                function toBlock() {
+                    //var xmlDoc = xml.responseXML;
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            deneme(this);
+                        }
+                    };
+                    xhttp.open("GET", "blocks.xml", true);
+                    xhttp.send();
+                }
+
+                function deneme(xml) {
+                    var noofelse = 0;
+                    var noofelseif = 0;
+                    var intp = 0;
+                    var inmeasure = 0;
+                    var mutnumber = 2;
+                    var tp_exist=0;
+                    if (Blockly.mainWorkspace !== null) {
+                        Blockly.mainWorkspace.clear();
+                    }
+
+                    var xmlDoc = xml.responseXML;
+                    var text = editor.getValue();
+                    var str, str1, str2, str3, str4; //1. library name
+                    var lines, clines, line0, line1, line2, line3, newEle, newEle2;
+                    var st,stc;
+                    lines = text.split("\n");
+                    var nooflines = lines.length;
+                    var clines = lines;
+                    /*if(nooflines>0)
+                    {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                    }*/
+                    //Blockly.Xml.domToWorkspace(xmlDoc.getElementById('b70'), workspace);
+
+                    for (var i = 0; i < nooflines; i++) { //read and execute line by line
+                        if (lines[i]) {
+                            //lines[i] = lines[i].replace(/[\[\]{}'"]/g, " ")
+                            //lines[i] = lines[i].replace(/,/g, ' ');
+                            //lines[i] = lines[i].replace('"', ' ');
+
+                            //lines[i] = lines[i].replace('(', ' ');
+                            //lines[i] = lines[i].replace(')', ' ');
+                            //lines[i] = lines[i].replace(/"/g, ' ');
+                            line0 = lines[i].split(/\s+/); //parse the sentence
+                            //line0 = lines[i].split(" ");
+                            if (line0[0] == "")
+                                line0.shift();
+                        }
+                        else { continue; }
+                        if (lines[i + 1]) {
+                            lines[i + 1] = lines[i + 1].replace('"', '');
+                            lines[i + 1] = lines[i + 1].replace(/"/g, '');
+                            line1 = lines[i + 1].split(/\s+/); //parse the sentence
+                            if (line1[0] == "")
+                                line1.shift();
+                        }
+                        if (lines[i + 2]) {
+                            lines[i + 2] = lines[i + 2].replace('"', '');
+                            lines[i + 2] = lines[i + 2].replace(/"/g, '');
+                            line2 = lines[i + 2].split(/\s+/); //parse the sentence
+                            if (line2[0] == "")
+                                line2.shift();
+                        }
+                        //alert(line0);
+                        // include library
+                        if (line0[0] === "testProcess") {
+                        	tpname=line0[1];
+                        	continue;
+                            /*tp_exist=1;
+                            var pr = xmlDoc.getElementsByTagName('protect')[0];
+                            var prc = pr.cloneNode(true);
+                            st = xmlDoc.getElementsByTagName('statement')[6];
+                            stc = st.cloneNode(true);
+                            newEle2 = xmlDoc.createElement("next");
+                            prc.appendChild(newEle2);
+                            stc.appendChild(prc);
+
+                            xmlDoc.getElementsByTagName("field")[90].childNodes[0].nodeValue =  line0[1];
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[75];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(stc);
+                            clone.appendChild(newEle);
+                            var x = xmlDoc.getElementById("root").childElementCount;
+                            if (x == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }*/
+                        }
+                        else if(line0[0] === "end" && line0[1] === "testProcess")
+                        {
+                            break;
+                            noofnext++;
+                        }
+                        else if (line0[0] === "include" && line0[1] === "library") {
+                            xmlDoc.getElementsByTagName("field")[0].childNodes[0].nodeValue =  line0[2];
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[0];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(newEle);
+                            var x = xmlDoc.getElementById("root").childElementCount;
+                            if (x == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+
+                                    dx.appendChild(clone);
+                            }
+                        }
+                        else if (line0[0] === "require") {
+                            str1 = line0[1];
+                            str2 = line0[4];
+                            str3 = line0[6];
+                            str4 = line0[8];
+
+                            xmlDoc.getElementsByTagName("field")[3].childNodes[0].nodeValue = str1;
+                            xmlDoc.getElementsByTagName("field")[4].childNodes[0].nodeValue = str2;
+                            xmlDoc.getElementsByTagName("field")[5].childNodes[0].nodeValue = str3;
+                            xmlDoc.getElementsByTagName("field")[6].childNodes[0].nodeValue = str4;
+                            if (i == 0) {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[3];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[3];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+                        } else if (line0[0] === "bind" && line0[2] === "to") {
+
+                            str = line0[1];
+                            //line1 == line0[3].split(' " ');
+                            str1 = line0[3];
+                            xmlDoc.getElementsByTagName("field")[7].childNodes[0].nodeValue = str;
+                            xmlDoc.getElementsByTagName("field")[8].childNodes[0].nodeValue = str1;
+                            if (i == 0) {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[4];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[4];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+                        }
+
+                        else if (line0[0] === "order" && line2[0] === "end" && line2[1] === "order") {
+
+                            str1 = line0[1];
+                            str2 = line1[0];
+                            str3 = line1[1];
+                            xmlDoc.getElementsByTagName("field")[11].childNodes[0].nodeValue = str1;
+                            xmlDoc.getElementsByTagName("field")[12].childNodes[0].nodeValue = str2;
+                            xmlDoc.getElementsByTagName("field")[13].childNodes[0].nodeValue = str3;
+                            if (i == 0) {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[7];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[7];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+
+
+                        } else if (line0[0] === "filter") {
+                            str = line0[1];
+                            xmlDoc.getElementsByTagName("field")[14].childNodes[0].nodeValue = str;
+                            newEle = xmlDoc.createElement("next");
+                            secret = xmlDoc.createElement("next");
+                            noofnext++;
+                            sx = xmlDoc.getElementsByTagName('statement')[2];
+                            clones = sx.cloneNode(true);
+                            clones.appendChild(newEle);
+                            x = xmlDoc.getElementsByTagName('block')[8];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(clones);
+                            clone.appendChild(secret);
+                            infilter=1;
+                            if (noofnext == 1) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+
+                        }
+                        else if (line0[0] === "end" && line0[1] === "filter") {
+                            infilter=0;noofnext++;alert(888);
+                        }
+                        else if (line0[0] === "testPoint" && line0[2] === "like") {
+
+                            str = line0[1];
+                            str1 = line0[3];
+                            xmlDoc.getElementsByTagName("field")[30].childNodes[0].nodeValue = str;
+                            xmlDoc.getElementsByTagName("field")[31].childNodes[0].nodeValue = str1;
+                            if (i == 0) {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[20];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[20];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+                        } else if (line0[0] === "testGroup" && line0[2] === "testPoint") {
+
+                            str = line0[1];
+                            str1 = line0[3];
+                            xmlDoc.getElementsByTagName("field")[9].childNodes[0].nodeValue = str;
+                            xmlDoc.getElementsByTagName("field")[10].childNodes[0].nodeValue = str1;
+                            if (i == 0) {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[5];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[5];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+
+                        } else if (line0[0] === "testPoint" && line1[0] === "provide") {
+                            xmlDoc.getElementsByTagName("field")[21].childNodes[0].nodeValue = line0[1];
+
+                            if (i == 0) {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[11];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[11];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+                            intp = 1;
+                            i++;
+                        } else if (line0[0] === "measure") {
+                            //noofnext++;
+                            intp = 0;
+                            inmeasure = 1;
+                        }
+                        else if (line0[0] === "end" && line0[1] === "testPoint") {
+                            //noofnext++;
+                            intp = 0;
+                            inmeasure = 0;
+                        } else if (line0[0] === "constant") {
+                            lines[i] = lines[i].replace(/=/g, ' ');
+                            line0 = lines[i].split(/\s+/);
+                            str = line0[1];
+                            str1 = line0[2];
+                            xmlDoc.getElementsByTagName("field")[37].childNodes[0].nodeValue = str;
+                            xmlDoc.getElementsByTagName("field")[38].childNodes[0].nodeValue = str1;
+
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[25];
+                            clone = x.cloneNode(true);
+                            num = xmlDoc.getElementsByTagName('block')[26];
+                            clonenum = num.cloneNode(true);
+                            clone.appendChild(newEle);
+                            if (i == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                            rootval = xmlDoc.getElementsByTagName('value')[noofvalue];
+                            rootval.appendChild(clonenum);
+                            noofvalue++;
+                        }
+                        else if (line0[0] === "expand" && line0[2] === "replace") {
+                            val = xmlDoc.getElementsByTagName('value')[2];
+                            valc = val.cloneNode(true);
+                            xmlDoc.getElementsByTagName("field")[46].childNodes[0].nodeValue = line0[1];
+                            xmlDoc.getElementsByTagName("field")[47].childNodes[0].nodeValue = line0[3];
+                            xmlDoc.getElementsByTagName("field")[48].childNodes[0].nodeValue = line0[5];
+                            sec = xmlDoc.getElementsByTagName('block')[33];
+                            secc = sec.cloneNode(true);
+                            valc.appendChild(secc);
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[32];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(valc);
+                            clone.appendChild(newEle);
+                            if (i == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                            //xmlDoc.getElementsByTagName("value")[noofvalue].setAttribute("name","NAME");
+                            noofvalue++;
+
+                        }
+                        else if (line0[0] === "try") {
+                            noofelseif = 0;
+                            noofelse = 0;
+                            str = line0[1];
+                            str1 = line0[3];
+                            xmlDoc.getElementsByTagName("field")[41].childNodes[0].nodeValue = str;
+                            //xmlDoc.getElementsByTagName("field")[70].childNodes[0].nodeValue = str1;
+                            //Blockly.Xml.domToWorkspace(xmlDoc.getElementById('ee'), workspace);
+
+                            newEle = xmlDoc.createElement("next");
+                            secret = xmlDoc.createElement("next");
+                            noofnext++;
+                            sx = xmlDoc.getElementsByTagName('statement')[3];
+                            clones = sx.cloneNode(true);
+                            clones.appendChild(newEle);
+                            x = xmlDoc.getElementsByTagName('block')[28];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(clones);
+                            clone.appendChild(secret);
+
+                            if (noofnext == 1) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+
+                        }
+                        else if (line0[0] === "if") {
+                            noofelseif = 0;
+                            noofelse = 0;
+
+                            var str = line0[1] + " ";
+                            var ll = line0.length;
+                            for (var j = 2; j < ll - 1; j++) {
+                                str += line0[j] + " ";
+                            }
+                            xmlDoc.getElementsByTagName("field")[87].childNodes[0].nodeValue = str;
+                            str = "";
+                            iff = xmlDoc.getElementsByTagName('block')[72];
+                            iffs = iff.cloneNode(true);
+                            ifval = xmlDoc.getElementsByTagName('value')[0];
+                            ifvals = ifval.cloneNode(true);
+                            ifvals.appendChild(iffs);
+                            //xmlDoc.getElementsByTagName("field")[70].childNodes[0].nodeValue = str1;
+                            //Blockly.Xml.domToWorkspace(xmlDoc.getElementById('ee'), workspace);
+
+                            newEle = xmlDoc.createElement("next");
+                            secret = xmlDoc.createElement("next");
+                            noofnext++;
+                            sx = xmlDoc.getElementsByTagName('statement')[3];
+                            clones = sx.cloneNode(true);
+                            clones.appendChild(newEle);
+                            x = xmlDoc.getElementsByTagName('block')[35];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(ifvals);
+                            clone.appendChild(clones);
+                            clone.appendChild(secret);
+
+                            if (noofnext == 1) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                            xmlDoc.getElementsByTagName("value")[noofvalue].setAttribute("name", "IF0");
+                            noofvalue++;
+
+                        }
+                        else if (line0[0] === "on") {
+                            if (line0[2] === "do") {
+                                noofelseif++;
+                                xmlDoc.getElementsByTagName("mutation")[mutnumber].setAttribute("elseif", noofelseif);
+                                xmlDoc.getElementsByTagName("statement")[5].setAttribute("name", "DO" + "" + noofelseif);
+
+                                sx = xmlDoc.getElementsByTagName('statement')[5];
+                            }
+                            else {
+                                noofelse++;
+                                xmlDoc.getElementsByTagName("mutation")[mutnumber].setAttribute("else", noofelse);
+                                //xmlDoc.getElementsByTagName("statement")[4].setAttribute("name","DO"+""+noofelse);
+                                sx = xmlDoc.getElementsByTagName('statement')[4];
+
+                            }
+
+
+                            clone = sx.cloneNode(true);
+                            secret = xmlDoc.createElement("next");
+                            nc = secret.cloneNode(true);
+                            noofnext++;
+                            clone.appendChild(secret);
+
+
+                            dx = xmlDoc.getElementsByTagName('next')[noofnext - 1];
+                            dx.parentNode.appendChild(clone);
+                            dx.parentNode.appendChild(nc);
+                            dx.parentNode.removeChild(dx);
+
+                        }
+                        else if (line0[0] === "else") {
+                            if (line0[1] === "if") {
+                                str = line0[2] + " ";
+                                var ll = line0.length;
+                                for (var j = 3; j < ll - 1; j++) {
+                                    str += line0[j] + " ";
+                                }
+                                xmlDoc.getElementsByTagName("field")[87].childNodes[0].nodeValue = str;
+                                iff = xmlDoc.getElementsByTagName('block')[72];
+                                iffs = iff.cloneNode(true);
+                                ifval = xmlDoc.getElementsByTagName('value')[0];
+                                ifvals = ifval.cloneNode(true);
+                                ifvals.appendChild(iffs);
+                                noofelseif++;
+                                xmlDoc.getElementsByTagName("mutation")[mutnumber].setAttribute("elseif", noofelseif);
+                                xmlDoc.getElementsByTagName("statement")[5].setAttribute("name", "DO" + "" + noofelseif);
+                                sx = xmlDoc.getElementsByTagName('statement')[5];
+                                clone = sx.cloneNode(true);
+                                //clone.appendChild(ifvals);
+                                secret = xmlDoc.createElement("next");
+                                nc = secret.cloneNode(true);
+                                noofnext++;
+                                clone.appendChild(secret);
+
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 1];
+                                dx.parentNode.appendChild(ifvals);
+                                dx.parentNode.appendChild(clone);
+                                dx.parentNode.appendChild(nc);
+                                dx.parentNode.removeChild(dx);
+                                xmlDoc.getElementsByTagName("value")[noofvalue].setAttribute("name", "IF" + "" + noofelseif);
+                                //alert(noofvalue);
+                                noofvalue++;
+                            }
+                            else {
+                                noofelse++;
+                                xmlDoc.getElementsByTagName("mutation")[mutnumber].setAttribute("else", noofelse);
+                                sx = xmlDoc.getElementsByTagName('statement')[4];
+                                clone = sx.cloneNode(true);
+                                secret = xmlDoc.createElement("next");
+                                nc = secret.cloneNode(true);
+                                noofnext++;
+                                clone.appendChild(secret);
+
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 1];
+                                dx.parentNode.appendChild(clone);
+                                dx.parentNode.appendChild(nc);
+                                dx.parentNode.removeChild(dx);
+                            }
+
+
+
+
+
+                        }
+                        else if (line0[0] === "end" && line0[1] === "if") {
+                            noofnext++;
+                            mutnumber++;
+                        }
+                        else if (line0[0] === "end" && line0[1] === "try") {
+                            noofnext++;
+                            mutnumber++;
+                        }
+                        else if (line0[0] === "end" && line0[1] === "do") {
+
+                        }
+                        else if (line0[0] === "define" && line0[2] === "as") {
+                            str = line0[1];
+                            xmlDoc.getElementsByTagName("field")[43].childNodes[0].nodeValue = str;
+                            newEle = xmlDoc.createElement("next");
+                            secret = xmlDoc.createElement("next");
+                            noofnext++;
+                            sx = xmlDoc.getElementsByTagName('statement')[0];
+                            clones = sx.cloneNode(true);
+                            clones.appendChild(newEle);
+                            x = xmlDoc.getElementsByTagName('block')[30];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(clones);
+                            clone.appendChild(secret);
+
+                            if (noofnext == 1) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                        }
+                        else if (line0[0] === "fill" && line0[2] === "using") {
+                            str = line0[1];
+                            str1 = line0[3];
+                            xmlDoc.getElementsByTagName("field")[44].childNodes[0].nodeValue = str;
+                            xmlDoc.getElementsByTagName("field")[45].childNodes[0].nodeValue = str1;
+
+                            //xmlDoc.getElementsByTagName("field")[70].childNodes[0].nodeValue = str1;
+                            //Blockly.Xml.domToWorkspace(xmlDoc.getElementById('ee'), workspace);
+                            newEle = xmlDoc.createElement("next");
+                            secret = xmlDoc.createElement("next");
+                            noofnext++;
+                            sx = xmlDoc.getElementsByTagName('statement')[1];
+                            clones = sx.cloneNode(true);
+                            clones.appendChild(newEle);
+                            x = xmlDoc.getElementsByTagName('block')[31];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(clones);
+                            clone.appendChild(secret);
+
+                            if (noofnext == 1) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                        }
+                        else if (line0[0] === "end" && line0[1] === "define") {
+                            noofnext++;
+                        }
+                        else if (line0[0] === "end" && line0[1] === "fill") {
+                            noofnext++;
+                        }
+                        else if (line0[0] === "for" && line0[1] === "each") {
+                            xmlDoc.getElementsByTagName("field")[58].childNodes[0].nodeValue = line0[2];
+                            xmlDoc.getElementsByTagName("field")[59].childNodes[0].nodeValue = line0[4];
+                            xmlDoc.getElementsByTagName("field")[61].childNodes[0].nodeValue = line0[6];
+
+                            newEle = xmlDoc.createElement("next");
+                            secret = xmlDoc.createElement("next");
+                            noofnext++;
+                            sx = xmlDoc.getElementsByTagName('statement')[2];
+                            clones = sx.cloneNode(true);
+                            clones.appendChild(newEle);
+                            x = xmlDoc.getElementsByTagName('block')[46];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(clones);
+                            clone.appendChild(secret);
+
+                            if (noofnext == 1) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                            noofvalue += 1;
+                        }
+                        else if (line0[0] === "end" && line0[1] === "for") {
+                            noofnext++;
+                        }
+                        else if (line0[0] === "set" && line0[2] === "to") {
+                            if (line0.length === 4) {
+                                str = line0[1];
+                                str1 = line0[3];
+                                xmlDoc.getElementsByTagName("field")[71].childNodes[0].nodeValue = str;
+                                xmlDoc.getElementsByTagName("field")[73].childNodes[0].nodeValue = str;
+
+                                //xmlDoc.getElementsByTagName("field")[70].childNodes[0].nodeValue = str1;
+                                if (isNaN(str1[0])) {
+                                    xmlDoc.getElementsByTagName("field")[72].childNodes[0].nodeValue = str1;
+
+                                    newEle = xmlDoc.createElement("next");
+                                    noofnext++;
+                                    x = xmlDoc.getElementsByTagName('block')[57];
+                                    clone = x.cloneNode(true);
+                                    clone.appendChild(newEle);
+                                    if (i == 0) {
+                                        dx = xmlDoc.getElementsByTagName('root')[0];
+                                        dx.appendChild(clone);
+                                    } else {
+
+                                        dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                        if (dx.parentNode.nodeName === "statement") {
+                                            dx.parentNode.appendChild(clone);
+
+                                        }
+                                        else
+                                            dx.appendChild(clone);
+                                    }
+                                }
+                                else {
+                                    xmlDoc.getElementsByTagName("field")[74].childNodes[0].nodeValue = str1;
+
+                                    newEle = xmlDoc.createElement("next");
+                                    noofnext++;
+                                    x = xmlDoc.getElementsByTagName('block')[59];
+                                    clone = x.cloneNode(true);
+                                    clone.appendChild(newEle);
+                                    if (i == 0) {
+                                        dx = xmlDoc.getElementsByTagName('root')[0];
+                                        dx.appendChild(clone);
+                                    } else {
+
+                                        dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                        if (dx.parentNode.nodeName === "statement") {
+                                            dx.parentNode.appendChild(clone);
+
+                                        }
+                                        else
+                                            dx.appendChild(clone);
+                                    }
+                                }
+
+
+                            } else if (line0.length > 4) {
+
+                                str1 = line0[1];
+                                var str = line0[3] + " ";
+                            var ll = line0.length;
+                            for (var j = 4; j < ll ; j++) {
+                                str += line0[j] + " ";
+                            }
+                            xmlDoc.getElementsByTagName("field")[71].childNodes[0].nodeValue = str1;
+                                xmlDoc.getElementsByTagName("field")[72].childNodes[0].nodeValue = str;
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[57];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                if (i == 0) {
+                                    dx = xmlDoc.getElementsByTagName('root')[0];
+                                    dx.appendChild(clone);
+                                } else {
+
+                                    dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                    if (dx.parentNode.nodeName === "statement") {
+                                        dx.parentNode.appendChild(clone);
+
+                                    }
+                                    else
+                                        dx.appendChild(clone);
+                                }
+                            }
+                            noofvalue++;
+                        }
+                        else if (line0[0] === "SHUTDOWN:") {
+
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[6];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(newEle);
+                            var x = xmlDoc.getElementById("root").childElementCount;
+                            if (x == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                        }
+                        else if (line0[0][0] === "/" && line0[0][1] == "/") {
+
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[67];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(newEle);
+                            if (i == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                dx.appendChild(clone);
+                            }
+                            while (clines[i].charAt(0) === ' ') {
+                                clines[i] = clines[i].substr(1);
+                            }
+                            while (clines[i].charAt(0) === '/') {
+                                clines[i] = clines[i].substr(1);
+                            }
+                            xmlDoc.getElementsByTagName("field")[89].childNodes[0].nodeValue = clines[i];
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[74];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                //alert(noofnext);
+
+
+                                    dx = xmlDoc.getElementsByTagName('next')[noofnext-2 ];
+                                    if (dx.parentNode.nodeName === "statement") {
+                                        dx.parentNode.appendChild(clone);
+
+                                    }
+                                    else
+                                        dx.appendChild(clone);
+
+
+                            //Blockly.Xml.domToWorkspace(document.getElementById('shut'), workspace);
+                        } else if (line0[0] === "constant" && line0[1] === "var_cons" && line0[2] === "=") {
+
+                            str = line0[3];
+                            document.getElementById("consv1").innerHTML = str;
+                            //editor.setValue(document.getElementById('bind'));
+                            //document.getElementById('include') = str;
+                            Blockly.Xml.domToWorkspace(document.getElementById('consv'), workspace);
+                        } else if (line0[0] === "sleep" && line0[1] === "for") {
+                            val = xmlDoc.getElementsByTagName('value')[0];
+                            valc = val.cloneNode(true);
+                            xmlDoc.getElementsByTagName("field")[38].childNodes[0].nodeValue = line0[2];
+                            sec = xmlDoc.getElementsByTagName('block')[26];
+                            secc = sec.cloneNode(true);
+                            valc.appendChild(secc);
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[63];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(valc);
+                            clone.appendChild(newEle);
+                            if (i == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                            xmlDoc.getElementsByTagName("value")[noofvalue].setAttribute("name", "NAME");
+                            noofvalue++;
+
+                        }
+
+                        else if (line0[0].indexOf(".") != -1) {
+                            //lines[i] = lines[i].replace(/./g, ' ');
+                            line0 = clines[i].split(".");
+                            //alert(line0);
+                            str = line0[0];
+                            str1 = line0[1];
+                            xmlDoc.getElementsByTagName("field")[33].childNodes[0].nodeValue = str;
+                            xmlDoc.getElementsByTagName("field")[34].childNodes[0].nodeValue = str1;
+
+
+                            newEle = xmlDoc.createElement("next");
+                            noofnext++;
+                            x = xmlDoc.getElementsByTagName('block')[21];
+                            clone = x.cloneNode(true);
+                            clone.appendChild(newEle);
+                            if (i == 0) {
+                                dx = xmlDoc.getElementsByTagName('root')[0];
+                                dx.appendChild(clone);
+                            } else {
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+                                    //alert(2);
+                                    //xmlDoc.documentElement.removeChild(dx);
+                                    //alert(8)
+                                    //noofnext--;
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                        }
+                        else {
+                            if (intp) {
+                                if(line0.length >= 2)
+                                //noofvalue++;
+                                {var str = line0[1] + " ";
+                                var ll = line0.length;
+                                for (var j = 2; j < ll; j++) {
+                                str += line0[j] + " ";
+                                }
+                                xmlDoc.getElementsByTagName("field")[91].childNodes[0].nodeValue = str;
+                                str = "";
+                                tps = xmlDoc.getElementsByTagName('block')[76];
+                                tpss = tps.cloneNode(true);
+                                tpval = xmlDoc.getElementsByTagName('value')[2];
+                                tpvals = tpval.cloneNode(true);
+                                tpvals.appendChild(tpss);
+                                noofvalue++;
+
+                                xmlDoc.getElementsByTagName("field")[84].childNodes[0].nodeValue = line0[0];
+                                n = xmlDoc.createElement("next");
+                                nc = n.cloneNode(true);
+
+                                x = xmlDoc.getElementsByTagName('value')[0];
+                                noofvalue++;
+                                clone = x.cloneNode(true);
+                                b = xmlDoc.getElementsByTagName('block')[70];
+                                newEle = b.cloneNode(true);
+                                newEle.appendChild(tpvals);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 1];
+                                dx.parentNode.appendChild(clone);
+                                dx.parentNode.appendChild(nc);
+                                dx.parentNode.removeChild(dx);}
+                                else
+                                {
+                                xmlDoc.getElementsByTagName("field")[84].childNodes[0].nodeValue = line0[0];
+                                n = xmlDoc.createElement("next");
+                                nc = n.cloneNode(true);
+
+                                x = xmlDoc.getElementsByTagName('value')[0];
+                                noofvalue++;
+                                clone = x.cloneNode(true);
+                                b = xmlDoc.getElementsByTagName('block')[70];
+                                newEle = b.cloneNode(true);
+                                //newEle.appendChild(tpvals);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 1];
+                                dx.parentNode.appendChild(clone);
+                                dx.parentNode.appendChild(nc);
+                                dx.parentNode.removeChild(dx);
+                                }
+                            }
+                            else if (inmeasure) {
+
+                                //noofvalue++;
+                                str1 = line0[0];
+                                str2 = line0[2];
+                                xmlDoc.getElementsByTagName("field")[85].childNodes[0].nodeValue = str1;
+                                xmlDoc.getElementsByTagName("field")[86].childNodes[0].nodeValue = str2;
+
+
+                                n = xmlDoc.createElement("next");
+                                nc = n.cloneNode(true);
+
+                                x = xmlDoc.getElementsByTagName('value')[1];
+                                noofvalue++;
+                                clone = x.cloneNode(true);
+                                b = xmlDoc.getElementsByTagName('block')[71];
+                                newEle = b.cloneNode(true);
+                                clone.appendChild(newEle);
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext - 1];
+                                dx.parentNode.appendChild(clone);
+                                dx.parentNode.appendChild(nc);
+                                dx.parentNode.removeChild(dx);
+                            }
+
+                            else if(infilter&&line0.length == 3)
+                            {
+
+                                alert(line0);
+                                xmlDoc.getElementsByTagName("field")[15].childNodes[0].nodeValue = line0[0];
+                                xmlDoc.getElementsByTagName("field")[16].childNodes[0].nodeValue = line0[1];
+                                xmlDoc.getElementsByTagName("field")[17].childNodes[0].nodeValue = line0[2];
+                                newEle = xmlDoc.createElement("next");
+                            	noofnext++;
+                            	x = xmlDoc.getElementsByTagName('block')[9];
+                            	clone = x.cloneNode(true);
+                            	clone.appendChild(newEle);
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext -2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+                                }
+                                else
+                                    dx.appendChild(clone);
+
+                            }
+                            else if(infilter&&line0.length==2)
+                            {
+
+                            	line0 = clines[i]//.split(/\s+/);
+                            	line0 = line0.replace(/[\[\]{}'"]/g, " ");
+                            	line0 = line0.replace(/,/g, ' ');
+                            	line0 = line0.replace(/"/g, ' ');
+                            	line0 = line0.split(/\s+/);
+                            	if (line0[0] == "")
+                                line0.shift();
+                            	xmlDoc.getElementsByTagName("field")[18].childNodes[0].nodeValue = line0[0];
+                                xmlDoc.getElementsByTagName("field")[19].childNodes[0].nodeValue = line0[1];
+                                xmlDoc.getElementsByTagName("field")[20].childNodes[0].nodeValue = line0[2];
+                                newEle = xmlDoc.createElement("next");
+                            	noofnext++;
+                            	x = xmlDoc.getElementsByTagName('block')[10];
+                            	clone = x.cloneNode(true);
+                            	clone.appendChild(newEle);
+
+                                dx = xmlDoc.getElementsByTagName('next')[noofnext -2];
+                                if (dx.parentNode.nodeName === "statement") {
+                                    dx.parentNode.appendChild(clone);
+                                }
+                                else
+                                    dx.appendChild(clone);
+                            }
+                            else if(line0.length == 0)
+                            {
+                                continue;
+                            }
+                            else if(line0.length > 0) {
+                            	alert(line0);
+                                var str = line0[0] + " ";
+                                var ll = line0.length;
+                                for (var j = 1; j < ll; j++) {
+                                    str += line0[j] + " ";
+                                }
+
+                                xmlDoc.getElementsByTagName("field")[89].childNodes[0].nodeValue = clines[i];
+                                newEle = xmlDoc.createElement("next");
+                                noofnext++;
+                                x = xmlDoc.getElementsByTagName('block')[74];
+                                clone = x.cloneNode(true);
+                                clone.appendChild(newEle);
+                                if (i == 0) {
+                                    dx = xmlDoc.getElementsByTagName('root')[0];
+                                    dx.appendChild(clone);
+                                } else {
+
+                                    dx = xmlDoc.getElementsByTagName('next')[noofnext - 2];
+                                    if (dx.parentNode.nodeName === "statement") {
+                                        dx.parentNode.appendChild(clone);
+
+                                    }
+                                    else
+                                        dx.appendChild(clone);
+                                }
+                            }
+
+                            else
+                            {
+
+                            }
+                        }
+                    }
+                    var xmlText = new XMLSerializer().serializeToString(xmlDoc.getElementsByTagName('root')[0]);
+                    //editor.setValue(xmlText);
+                    alert(xmlText);
+                    if(tp_exist==1){
+                    st=xmlDoc.getElementsByTagName('next')[0];
+                    stc = st.childNodes[0];
+                    st=xmlDoc.getElementsByTagName('protect')[1];
+                    st.parentNode.removeChild(st);
+                    st=xmlDoc.getElementsByTagName('statement')[7];
+                    st.appendChild(stc);}
+
+
+                    Blockly.Xml.domToWorkspace(xmlDoc.getElementById('root'), workspace);
+                    //alert(document.getElementsByTagName("value").length);
+                    noofnext = 0;
+                    noofvalue = 14;
+                    dx = xmlDoc.getElementsByTagName('root')[0];
+                    xmlDoc.documentElement.removeChild(dx);
+
+                    var topBlockString = workspace.getTopBlocks(true)[0].toString();
+                    if (topBlockString != null) {
+                        //window.alert(workspace.getTopBlocks(true)[1].toString());
+                        var k = 0;
+                        var bs = workspace.getTopBlocks(true);
+                        for (; k < bs.length; k++) {
+                            var b = workspace.getTopBlocks(true)[k];
+                            if (b.getColour() == "#5ba5a5") {
+                                b.setColour(200);
+                            }
+                            else if (b.getColour() == "#a55b5b") {
+                                b.setColour(20);
+                            }
+                            var flag = 1;
+                            while (flag) {
+                                if (b.nextConnection.targetBlock() != null) {
+                                    b = b.nextConnection.targetBlock();
+
+                                    if (b.getColour() == "#5ba5a5") {
+                                        b.setColour(200);
+                                    }
+                                    else if (b.getColour() == "#a55b5b") {
+                                        b.setColour(20);
+                                    }
+                                }
+                                else {
+                                    flag = 0;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+
+
+
+                editor.setOption("lint", editor.getValue().trim());
+
+                editor.on("keyup", function (cm, event) {
+                    var keycode = event.which;
+                    CodeMirror.signal(cm, "keydown", { which: keycode, keyCode: keycode });
+                    if (keycode == 13 || keycode == 38 || keycode == 40) {
+                        editor.setOption("lint", editor.getValue().trim());
+                        editor.performLint();
+                    }
+                })
+
+                editor.on("paste", function () {
+                    editor.setOption("lint", editor.getValue().trim());
+                    editor.performLint();
+                })
+
+                editor.on("mousedown", function () {
+                    editor.setOption("lint", editor.getValue().trim());
+                    editor.performLint();
+                })
+
+                // Automatic keyword closing
+                function insertTextAtCursor(editor, text) {
+                    var doc = editor.getDoc();
+                    var cursor = doc.getCursor();
+                    doc.replaceRange(text, cursor);
+                }
+
+                function findOccur(word, str) {
+                    return str.split(word).length - 1;
+                }
+
+                editor.on("keyup", function (cm, event) {
+                    var keycode = event.which;
+
+                    CodeMirror.signal(cm, "keydown", { which: keycode, keyCode: keycode });
+                    str = " ";
+                    if (keycode == 13 && !/\S/.test(editor.getLine(editor.getCursor().line))) {
+                        var above = editor.getLine(editor.getCursor().line - 1);
+                        if (above.split(/\s+/).includes('if') &&
+                            !above.split(/\s+/).includes('end') &&
+                            findOccur("if", editor.getValue()) != 2 * findOccur("end if", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end if");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("if") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('testProcess') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("testProcess", editor.getValue()) != 2 * findOccur("end testProcess", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end testProcess");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("testProcess") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('define') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("define", editor.getValue()) != 2 * findOccur("end define", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end define");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("define") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('fill') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("fill", editor.getValue()) != 2 * findOccur("end fill", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end fill");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("fill") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('order') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("order", editor.getValue()) != 2 * findOccur("end order", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end order");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("order") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('filter') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("filter", editor.getValue()) != 2 * findOccur("end filter", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end filter");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("filter") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('testPoint') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("testPoint", editor.getValue()) != 2 * findOccur("end testPoint", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end testPoint");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("testPoint") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('try') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("try", editor.getValue()) != 2 * findOccur("end try", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end try");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("try") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('for') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("for", editor.getValue()) != 2 * findOccur("end for", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end for");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("for") + 5);
+                        }
+                        else if (above.split(/\s+/).includes('do') &&
+                                !above.split(/\s+/).includes('end') &&
+                                findOccur("do", editor.getValue()) != 2 * findOccur("end do", editor.getValue())) {
+
+                            position = editor.getCursor().ch;
+                            insertTextAtCursor(editor, "\t\r\n" + str.repeat(position) + "end do");
+                            editor.setCursor(editor.getCursor().line - 1, above.search("do") + 5);
+                        }
+                    }
+                });
+
+
+
+                // Suggestion
+                editor.on("keyup", function (cm, event) {
+                    var popupKeyCodes = {
+                        3: "Enter",
+                        8: "Backspace",
+                        9: "Tab",
+                        13: "Enter",
+                        16: "Shift",
+                        17: "Ctrl",
+                        18: "Alt",
+                        19: "Pause",
+                        20: "CapsLock",
+                        27: "Esc",
+                        32: "Space",
+                        33: "PageUp",
+                        34: "PageDown",
+                        35: "End",
+                        36: "Home",
+                        37: "Left",
+                        38: "Up",
+                        39: "Right",
+                        40: "Down",
+                        44: "PrintScrn",
+                        45: "Insert",
+                        46: "Delete",
+                        50: "'",
+                        55: "{",
+                        56: "(",
+                        59: ";",
+                        61: "=",
+                        91: "Mod",
+                        92: "Mod",
+                        93: "Mod",
+                        106: "*",
+                        107: "=",
+                        109: "-",
+                        110: ".",
+                        111: "/",
+                        127: "Delete",
+                        173: "-",
+                        186: ";",
+                        187: "=",
+                        188: ",",
+                        189: "-",
+                        190: ".",
+                        191: "/",
+                        192: "`",
+                        219: "[",
+                        220: "\\",
+                        221: "]",
+                        222: "'",
+                        225: "[",
+                        63232: "Up",
+                        63233: "Down",
+                        63234: "Left",
+                        63235: "Right",
+                        63272: "Delete",
+                        63273: "Home",
+                        63275: "End",
+                        63276: "PageUp",
+                        63277: "PageDown",
+                        63302: "Insert"
+                    }
+                    var keycode = event.which;
+                    CodeMirror.signal(cm, "keydown", { which: keycode, keyCode: keycode });
+                    if (!popupKeyCodes[(keycode || event.which).toString()]) {
+                        CodeMirror.showHint(cm);
+                    }
+                });
+
+
+
+
+                //replaceAll
+                function replaceAll(search, replacement) {
+                    var target = this;
+                    return target.replace(new RegExp(search, 'g'), replacement);
+                };
+
+                function getPos() {
+                    var sel = document.getSelection(),
+                        nd = sel.anchorNode,
+                        text = nd.textContent.slice(0, sel.focusOffset);
+
+                    var line = text.split("\n").length;
+                    var col = text.split("\n").pop().length;
+                    alert("row:" + line + ", col:" + col)
+                }
+
+                function myFunction() {
+                    document.getElementById("myDropdown").classList.toggle("show");
+                }
+
+                // Close the dropdown menu if the user clicks outside of it
+                window.onclick = function (event) {
+                    if (!event.target.matches('.dropbtn')) {
+
+                        var dropdowns = document.getElementsByClassName("dropdown-content");
+                        var i;
+                        for (i = 0; i < dropdowns.length; i++) {
+                            var openDropdown = dropdowns[i];
+                            if (openDropdown.classList.contains('show')) {
+                                openDropdown.classList.remove('show');
+                            }
+                        }
+                    }
+                }
+                document.getElementById("scrmnu").style.cssText = "display:none;";
+
+                function showMenu() {
+
+                    if (m == 0) {
+                        document.getElementById("scrmnu").style.cssText = "display:none;";
+                        document.getElementById("header").style.cssText = "";
+                        m = 1;
+                    } else {
+                        document.getElementById("header").style.cssText = "display:none;";
+                        document.getElementById("scrmnu").style.cssText = "";
+                        m = 0;
+                    }
+                }
+
+                function changecodemirror() {
+                    if (x == 0) {
+                        document.getElementById("blocklyDiv").style.cssText = "display:none;";
+
+                        document.getElementById("code").style.cssText = "top: 0 % ;float:right;left:155%; width:200% ";
+                        x = 1;
+                        //document.getElementById("deneme").innerText = ">  >   >   >   >";
+                        //visibility: hidden;
+                    } else {
+
+                        document.getElementById("blocklyDiv").style.cssText = "top: 0%; float: left;width: 50%;";
+
+                        document.getElementById("code").style.cssText = "";
+                        x = 0;
+                    }
+
+                }
+                document.getElementById("4").style.cssText = "display:none";
+                document.getElementById("5").style.cssText = "display:none";
+                document.getElementById("6").style.cssText = "display:none";
+                document.getElementById("7").style.cssText = "display:none";
+                document.getElementById("8").style.cssText = "display:none";
+
+                function openFind() {
+                    if (f1 == 0) {
+                        document.getElementById("1").style.cssText = "display:none";
+                        document.getElementById("2").style.cssText = "display:none";
+                        document.getElementById("3").innerText = "<<";
+                        document.getElementById("4").style.cssText = "";
+                        document.getElementById("5").style.cssText = "";
+                        document.getElementById("6").style.cssText = "";
+                        document.getElementById("7").style.cssText = "";
+                        document.getElementById("8").style.cssText = "";
+                        document.getElementById("9").style.cssText = "display:none";
+                        document.getElementById("10").style.cssText = "display:none";
+                        document.getElementById("11").style.cssText = "display:none";
+                        document.getElementById("about").style.cssText = "display:none";
+
+                        f1 = 1;
+                    } else {
+                        document.getElementById("1").style.cssText = "";
+                        document.getElementById("2").style.cssText = "";
+                        document.getElementById("3").innerText = "Find";
+                        document.getElementById("4").style.cssText = "display:none";
+                        document.getElementById("5").style.cssText = "display:none";
+                        document.getElementById("6").style.cssText = "display:none";
+                        document.getElementById("7").style.cssText = "display:none";
+                        document.getElementById("8").style.cssText = "display:none";
+                        document.getElementById("9").style.cssText = "";
+                        document.getElementById("10").style.cssText = "";
+                        document.getElementById("11").style.cssText = "";
+                        document.getElementById("about").style.cssText = "";
+
+                        f1 = 0;
+                    }
+
+
+                };
+
+                function find() {
+                    editor.execCommand("find");
+                };
+
+
+
+                function findPrev() {
+                    editor.execCommand("findPrev");
+                };
+
+                function findNext() {
+                    editor.execCommand("findNext");
+                };
+
+                function replace() {
+                    editor.execCommand("replace");
+                };
+
+                function replaceAll() {
+                    editor.execCommand("replaceAll");
+                };
+
+                function replaceAll(search, replacement) {
+                    var target = this;
+                    return target.replace(new RegExp(search, 'g'), replacement);
+                };
+
+                function macro() {
+
+                    var x = editor.getValue();
+                    var a = x.match("set (.*) to");
+                    var b = x.match("to (.*)");
+                    var index = x.indexOf("define");
+                    var tempString = x.substring(0, index);
+                    var lineNumber = tempString.split('\n').length;
+                    var index2 = x.indexOf("end");
+                    var tempString2 = x.substring(0, index2);
+                    var lineNumber2 = tempString2.split('\n').length;
+                    var lines = x.split('\n');
+                    // remove one line, starting at the first position
+                    lines.splice(lineNumber - 1, lineNumber2 - 1);
+                    // join the array back into a single string
+                    x = lines.join('\n');
+
+                    x = x.replaceAll(a[1], b[1]);
+                    var index3 = x.indexOf("include");
+                    var tempString3 = x.substring(0, index3);
+                    var lineNumber3 = tempString3.split('\n').length;
+                    var lines = x.split('\n');
+                    // remove one line, starting at the first position
+                    lines.splice(lineNumber3 - 1, lineNumber3);
+                    // join the array back into a single string
+                    x = lines.join('\n');
+
+
+
+                    editor.setValue(x);
+                };
+                document.getElementById("load").style.cssText = "display:none";
+
+                function load() {
+                    if (l == 0) {
+                        document.getElementById("load").style.cssText = "";
+                        document.getElementById("1").innerText = "<<";
+                        document.getElementById("2").style.cssText = "display:none";
+                        document.getElementById("3").style.cssText = "display:none";
+
+                        document.getElementById("9").style.cssText = "display:none";
+                        document.getElementById("10").style.cssText = "display:none";
+                        document.getElementById("11").style.cssText = "display:none";
+                        document.getElementById("about").style.cssText = "display:none";
+                        l = 1;
+                    } else {
+                        document.getElementById("load").style.cssText = "display:none";
+                        document.getElementById("1").innerText = "Load";
+                        document.getElementById("2").style.cssText = "";
+                        document.getElementById("3").style.cssText = "";
+
+                        document.getElementById("9").style.cssText = "";
+                        document.getElementById("10").style.cssText = "";
+                        document.getElementById("11").style.cssText = "";
+                        document.getElementById("about").style.cssText = "";
+
+                        l = 0;
+                    }
+
+                }
+
+                function loadfile(input) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        editor.setValue(e.target.result);
+                        editor.setOption("lint", editor.getValue().trim());
+                        editor.performLint();
+                    }
+                    reader.readAsText(input.files[0]);
+                }
+                var input = document.getElementById("select");
+                function selectTheme() {
+                    var theme = input.options[input.selectedIndex].textContent;
+                    editor.setOption("theme", theme);
+                    location.hash = "#" + theme;
+                }
+                var choice = (location.hash && location.hash.slice(1)) ||
+                    (document.location.search &&
+                        decodeURIComponent(document.location.search.slice(1)));
+                if (choice) {
+                    input.value = choice;
+                    editor.setOption("theme", choice);
+                }
+                CodeMirror.on(window, "hashchange", function () {
+                    var theme = location.hash.slice(1);
+                    if (theme) { input.value = theme; selectTheme(); }
+                });
+
+
+                function saveTextAsFile() {
+                    var textToWrite = editor.getValue();
+                    var textFileAsBlob = new Blob([textToWrite], {
+                        type: 'text/plain'
+                    });
+                    var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+
+                    var downloadLink = document.createElement("a");
+                    downloadLink.download = fileNameToSaveAs;
+                    downloadLink.innerHTML = "Download File";
+                    if (window.webkitURL != null) {
+                        // Chrome allows the link to be clicked
+                        // without actually adding it to the DOM.
+                        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+                    } else {
+                        // Firefox requires the link to be added to the DOM
+                        // before it can be clicked.
+                        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                        downloadLink.onclick = destroyClickedElement;
+                        downloadLink.style.display = "none";
+                        document.body.appendChild(downloadLink);
+                    }
+
+                    downloadLink.click();
+                }
+
+                function destroyClickedElement(event) {
+                    document.body.removeChild(event.target);
+                }
+
+                function showCode() {
+
+                    // Generate JavaScript code and display it.
+                    Blockly.SparkS.INFINITE_LOOP_TRAP = null;
+                    var code = Blockly.SparkS.workspaceToCode(workspace);
+                    editor.setValue(code);
+
+                    var x=editor.getValue();
+                    editor.setValue("testProcess "+tpname+"\n"+code+"\nend testProcess ");
+
+                    //highlighting code of the selected block.
+                    findLine(editString());
+
+                    // change colour of outside blocks
+                    var topBlocksNumber = workspace.getTopBlocks(true).length;
+                    if (topBlocksNumber > 0) {
+                        var allBlocks = workspace.getAllBlocks();
+                        var j = 0;
+                        for (; j < allBlocks.length; j++) {
+                            var a = allBlocks[j];
+                            if (a.getColour() == "#5b8ca5") {
+                                a.setColour(180);
+                            }
+                            else if (a.getColour() == "#a5745b") {
+                                a.setColour(0);
+                            }
+                        }
+                        var i = 0;
+                        var bs = workspace.getTopBlocks(true);
+                        for (; i < bs.length; i++) {
+                            var b = workspace.getTopBlocks(true)[i];
+                            if (b.getColour() == "#5ba5a5") {
+                                b.setColour(200);
+                            }
+                            else if (b.getColour() == "#a55b5b") {
+                                b.setColour(20);
+                            }
+                            var flag = 1;
+                            while (flag) {
+                                if (b.nextConnection.targetBlock() != null) {
+                                    b = b.nextConnection.targetBlock();
+
+                                    if (b.getColour() == "#5ba5a5") {
+                                        b.setColour(200);
+                                    }
+                                    else if (b.getColour() == "#a55b5b") {
+                                        b.setColour(20);
+                                    }
+                                }
+                                else {
+                                    flag = 0;
+                                }
+                            }
+                        }
+
+                    }
+
+                    var xmlText = new XMLSerializer().serializeToString(workspace);
+                    editor.setValue(xmlText);
+                }
+                function download(filename, text) {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                    element.setAttribute('download', filename);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+
+                // Start file download.
+                document.getElementById("dwn-btn").addEventListener("click", function () {
+                    // Generate download of hello.txt file with some content
+                    var text = editor.getValue();
+                    var x=editor.getValue();
+                    if(x)
+                    {var lines = text.split("\n");
+                                        var lines1 = lines[0].split(" ");
+                                        if(lines1[0]=="testProcess")
+                                        	tpname=lines1[1];
+                                        }
+                    var filename = tpname+".ss";
+
+                    download(filename, text);
+                }, false);
+
+                function searchKeyPress(e) {
+                    // look for window.event in case event isn't passed in
+                    e = e || window.event;
+                    if (e.keyCode == 13) {
+
+                        editor.setValue("set");
+                        document.getElementById("showcode").click();
+                        return false;
+                    }
+                    return true;
+                }
+                function changeauto() {
+                    if (a == 0) {
+                        a = 1;
+                        workspace.removeChangeListener(showCode);
+                        document.getElementById("turnAuto").innerText = "Turn on Auto";
+                    }
+                    else {
+                        a = 0;
+                        workspace.addChangeListener(showCode);
+                        document.getElementById("turnAuto").innerText = "Turn off Auto";
+                    }
+                }
+                if (a == 0)
+                    workspace.addChangeListener(showCode);
+
+
+                                var codeArray = [];
+                codeArray[0] = "include library Dialog";
+                codeArray[1] = "include library Math";
+                codeArray[2] = "testPoint tp1 \nprovide\n     		Frequency\n	        	Power\n 		ReferenceSource optional [\"External\", \"Internal\"] [default \"External\"]\n	        	SpurFrequency\nmeasure\n        	MixerSpur in \"dBc\"\nend testPoint";
+                codeArray[3] = "define setSpanFilter as\n" +
+                "if varFrequency < 2.2e3 or (SpurFrequency < 2.2e3 or (Math.Abs(varFrequency – SpurFrequency) < 2.2e3)) then\n" +
+                "   set PSA.Span to 10\n" +
+                "	set PSA.ResolutionBandwidth to 30\n" +
+                "else if varFrequency < 2.2e6 or (SpurFrequency < 2.2e6 or Math.Abs(varFrequency – SpurFrequency) < 2.2e6)) then\n" +
+                "	set PSA.Span to 2e3\n" +
+                "	set PSA.ResolutionBandwidth to 100\n" +
+                "else\n" +
+                "	set PSA.Span to 2e6\n" +
+                "	set PSA.ResolutionBandwidth to 10e3\n"; +
+                "end if\n"+
+                "end define\n";
+                codeArray[4] = "PSG.Reset";
+                codeArray[5] = "try\n" +
+                "for each tp1 in tgCollection order O1 do\n" +
+
+                "PSG.Setup\n"+
+                "PSG.Enable\n"+
+                "set Frequency to tp1.Frequency\n"+
+                "	set MaxFrequency to PSA.MaxFrequency\n"+
+                "set Power to tp1.Power\n"+
+                "set SpurToMeas to tp1.SpurFrequency\n" +
+                "set PSA.Coupling to \"DC\"\n"+
+                "set PSA.ReferenceLevel to Power + 5\n"+
+                "set PSA.CenterFrequency to Frequency\n"+
+                "set PSA.AverageSweep to 10\n"+
+                "expand setSpanFilter replace varFrequency with Frequency\n"+
+                "set PSA.AverageSweep to 1\n"+
+                "PSA.TakeSweep\n"+
+                "PSA.TakeSweep\n"+
+                "PSA.MarkerPeakHi\n"+
+                "set RefMarker to PSA.MarkerAmplitude\n"+
+
+                "	PSA.MarkerPeakHi\n"+
+
+                "set PSA.CenterFrequency to SpurToMeas\n"+
+
+                "set PSA.AverageSweep to 10\n"+
+                "	PSA.TakeSweep\n"+
+                "	PSA.TakeSweep\n"+
+
+                "	PSA.MarkerPeakHi\n"+
+                "set Measured to PSA.MarkerAmplitude\n"+
+                "set MeasureVal to Measured – RefMarker\n"+
+                "set UNCERTAINTY to UNC\n"+
+                "set MixerSpur to MeasureVal\n"+
+                "		PSG.Disable\n"+
+
+                "end for\n"+
+                "on UserInputError do\n"+
+                "	Dialog.ConnectionMessage(\"Input error occurred!\")\n"+
+                "end do\n"+
+                "on DeviceError do\n"+
+                "	Dialog.ConnectionMessage(\"Device error occurred!\")\n"+
+                "end do\n"+
+                "end try\n";
+                codeArray[6] = "sleep for 10s";
+                codeArray[7] = "include library Dialog\n" +
+                "include library Math\n" +
+                "testPoint tp1 \nprovide\n     		Frequency\n	        	Power\n 		ReferenceSource optional [\"External\", \"Internal\"] [default \"External\"]\n	        	SpurFrequency\nmeasure\n        	MixerSpur in \"dBc\"\nend testPoint\n" +
+                "define setSpanFilter as\n" +
+                "if varFrequency < 2.2e3 or (SpurFrequency < 2.2e3 or (Math.Abs(varFrequency – SpurFrequency) < 2.2e3)) then\n" +
+                "   set PSA.Span to 10\n" +
+                "	set PSA.ResolutionBandwidth to 30\n" +
+                "else if varFrequency < 2.2e6 or (SpurFrequency < 2.2e6 or Math.Abs(varFrequency – SpurFrequency) < 2.2e6)) then\n" +
+                "	set PSA.Span to 2e3\n" +
+                "	set PSA.ResolutionBandwidth to 100\n" +
+                "else\n" +
+                "	set PSA.Span to 2e6\n" +
+                "	set PSA.ResolutionBandwidth to 10e3\n"+
+                "end if\n"+
+                "end define\n" +
+                "PSG.Reset\n" +
+                "try\n" +
+                "for each tp1 in tgCollection order O1 do\n" +
+
+                "PSG.Setup\n"+
+                "PSG.Enable\n"+
+                "set Frequency to tp1.Frequency\n"+
+                "	set MaxFrequency to PSA.MaxFrequency\n"+
+                "set Power to tp1.Power\n"+
+                "set SpurToMeas to tp1.SpurFrequency\n" +
+                "set PSA.Coupling to \"DC\"\n"+
+                "set PSA.ReferenceLevel to Power + 5\n"+
+                "set PSA.CenterFrequency to Frequency\n"+
+                "set PSA.AverageSweep to 10\n"+
+                "expand setSpanFilter replace varFrequency with Frequency\n"+
+                "set PSA.AverageSweep to 1\n"+
+                "PSA.TakeSweep\n"+
+                "PSA.TakeSweep\n"+
+                "PSA.MarkerPeakHi\n"+
+                "set RefMarker to PSA.MarkerAmplitude\n"+
+
+                "	PSA.MarkerPeakHi\n"+
+
+                "set PSA.CenterFrequency to SpurToMeas\n"+
+
+                "set PSA.AverageSweep to 10\n"+
+                "	PSA.TakeSweep\n"+
+                "	PSA.TakeSweep\n"+
+
+                "	PSA.MarkerPeakHi\n"+
+                "set Measured to PSA.MarkerAmplitude\n"+
+                "set MeasureVal to Measured – RefMarker\n"+
+                "set UNCERTAINTY to UNC\n"+
+                "set MixerSpur to MeasureVal\n"+
+                "		PSG.Disable\n"+
+
+                "end for\n"+
+                "on UserInputError do\n"+
+                "	Dialog.ConnectionMessage(\"Input error occurred!\")\n"+
+                "end do\n"+
+                "on DeviceError do\n"+
+                "	Dialog.ConnectionMessage(\"Device error occurred!\")\n"+
+                "end do\n"+
+                "end try\n" +
+                "sleep for 10s\n";
+                codeArray[8] = "testPoint tp1\n"+
+                "	provide\n"+
+                "		Frequency\n"+
+                "		Rate\n"+
+                "		RefRate\n"+
+                "		Power\n"+
+                "		Function optional [\"Deviation\", \"Rate\" , \"Distortion\"] [default \"Deviation\"]\n"+
+                "		HighPassFilterFrequency optional [\"0\", \"50\" , \"300\"] [default \"0\"]\n"+
+                "		LowPassFilterFrequency optional [\"0\", \"3e3\" , \"15e3\" , \"30e3\" , \"300e3\"] [default \"0\"]\n"+
+                "		DeEmphisis optional [\"0\", \"25e-6\" , \"50e-6\" , \"75e-6\" , \"750e-6\"] [default \"0\"]\n"+
+                "		BandPassFilter optional [\"\", \"CCIT\"] [default \"\"]\n"+
+                "	    Detector optional [\"+Peak\", \"-Peak\" , \"Average\" , \"PeakToPeak\" , \"RMS\"] [default \"+Peak\"]\n"+
+                "		ReferenceSource optional [\"External\", \"Internal\"] [default \"Internal\"]\n"+
+                "		ModulationSource optional [\"External\", \"Internal\"] [default \"Internal\"]\n"+
+                "		ExtLevel optional [default \"5\"]\n"+
+                "		ExtImpedance optional [default \"50\"]\n"+
+                "	measure\n"+
+                "		FreqModulation in \"Hz\"\n"+
+                "end testPoint\n"+
+
+                "testPoint extSource\n"+
+                "	provide\n"+
+                "		Frequency\n"+
+                "		Volts\n"+
+                "		Impedance\n"+
+                "	measure\n"+
+                "		FreqModulation in \"Hz\"\n"+
+                "end testPoint\n";
+                codeArray[9] = "//a Sample Use of Exception Handling\n"+
+                "try\n"+
+                "//Loop Through Test Points Inside The Provided Test Group\n"+
+                "for each tp1 in tgCollection order O1 do\n"+
+
+                "//Setup The UUT\n"+
+                "PSG.Setup\n"+
+
+                "//Send The OutputOn Command To UUT\n"+
+                "PSG.Enable\n"+
+
+                "//Implicit Declaration of The Local Variable Frequency\n"+
+                "set Frequency to tp1.Frequency\n"+
+
+                "//Implicit Declaration of The Local Variable Maxfrequency\n"+
+                "	set MaxFrequency to PSA.MaxFrequency\n"+
+
+                "	//if Frequency < PSA.MinFrequency or Frequency > MaxFrequency UserInputException occurs.\n"+
+
+                "//Get The Power Level\n"+
+                "set Power to tp1.Power\n"+
+
+                "//Get The Harmonic to Measure\n"+
+                "set SpurToMeas to tp1.SpurFrequency\n"+
+
+                "//Set The Coupling\n"+
+                "set PSA.Coupling to “DC”\n"+
+
+                "//Find The Fundamental\n"+
+                "set PSA.ReferenceLevel to Power + 5\n"+
+                "set PSA.CenterFrequency to Frequency\n"+
+                "set PSA.AverageSweep to 10\n"+
+
+                "//Set The Span and Filters Using The Defined Macro\n"+
+                "expand setSpanFilter replace varFrequency with Frequency\n"+
+
+                "//Take a Couple of Sweeps\n"+
+                "set PSA.AverageSweep to 1\n"+
+                "PSA.TakeSweep\n"+
+                "PSA.TakeSweep\n"+
+
+                "//Get The Ref Marker\n"+
+                "PSA.MarkerPeakHi\n"+
+                "set RefMarker to PSA.MarkerAmplitude\n"+
+
+                "	PSA.MarkerPeakHi\n"+
+
+                "//Measure a Spur Frequency\n"+
+                "set PSA.CenterFrequency to SpurToMeas\n"+
+
+                "//Take a Couple of Sweeps \n"+
+                "set PSA.AverageSweep to 10\n"+
+                "	PSA.TakeSweep\n"+
+                "	PSA.TakeSweep\n"+
+
+                "//Measure The a\n"+
+                "	PSA.MarkerPeakHi\n"+
+                "set Measured to PSA.MarkerAmplitude\n"+
+                "set MeasureVal to Measured – RefMarker\n"+
+                "set UNCERTAINTY to UNC\n"+
+
+                "//Set The Measured Value As Test Result\n"+
+                "	set MixerSpur to MeasureVal\n"+
+
+                "//Send The OutputOff Command\n"+
+                "PSG.Disable\n"+
+
+                "end for\n"+
+                "// Exception Handling Part – UserInputError and DeviceError are predefined exception Types.\n"+
+                "on UserInputError do\n"+
+                "	Dialog.ConnectionMessage(\"Input error occurred!\")\n"+
+                "end do\n"+
+                "on DeviceError do\n"+
+                "	Dialog.ConnectionMessage(\"Device error occurred!\")\n"+
+                "end do\n"+
+                "end try\n";
+                function test() {
+                    editor.setValue(codeArray[testcntr]);
+                    toBlock();
+
+                    testcntr++;
+                    if (testcntr == codeArray.length) {
+                        testcntr = 0;
+                    }
+                }
+                function vote() {
+                    var str;
+                    if (confirm("Is it successful?") == true) {
+                        success++;
+                        testno++;
+
+                    } else {
+                        testno++;
+                    }
+                    str = "Results are succesfull " + success + "/" + testno;
+                    alert(str);
+                }
+                $(document).ready(function() {
+
+  // init
+  var containerWidth = $("#container").width();
+  var nbpanels = $(".panel").size();
+  var padding = 2.5;
+
+  $(".panel").width( (containerWidth / nbpanels) - (nbpanels * padding - 2 * padding));
+
+  $(".panel").resizable({
+    handles: 'e',
+    maxWidth: 450,
+    minWidth: 120,
+    resize: function(event, ui){
+      var currentWidth = ui.size.width;
+      // set the content panel width
+      $(".panel").width( ( (containerWidth - currentWidth + padding ) / (nbpanels - 1) ) - ((nbpanels - 1) * padding) );
+      $(this).width(currentWidth);
+    }
+  });
+
+});
+            </script>
+
+</body>
+
+</html>
